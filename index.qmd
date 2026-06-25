@@ -1,0 +1,23 @@
+![](img/banner_conclat_rojo.png){width="100%"}
+
+# Presentación {.unnumbered}
+
+Este libro corresponde al repositorio de preparación de la base de datos de la **Encuesta CONCLAT** para Chile y Argentina.
+
+El [primer capítulo](01-procesamiento-cl.html) corresponde al procesamiento de los datos, el [segundo capítulo](02-etiquetado-cl-es.html) corresponde al etiquetado de las variables y categorías de respuesta en español, y el [tercer capítulo](02-etiquetado-cl-en.html), todos para los datos de Chile.
+
+En cuanto a los datos de Argentina, en el [cuarto capítulo](04-procesamiento-ar.html) encontramos al procesamiento de los datos, en el [quinto capítulo]() encontramos el etiquetado de las variables y categorías de respuesta en español, y en [sexto capítulo]() encontramos el etiquetado de las variables y categorías de respuesta en inglés. Aun están en desarrollo.
+
+La Encuesta Conclat se aplica en el marco del Proyecto [CONCLAT](https://www.conclat.com/), que busca estudiar cómo se percibe el conflicto laboral y político en Argentina y Chile. Particularmente, analiza cómo las personas de distintas clases y con distinto estatus sindical perciben el conflicto dentro y fuera del lugar de trabajo. Tiene como propósito contribuir a la investigación internacional sobre clases, trabajo y conflicto produciendo datos cuantitativos originales y un instrumento de investigación comparable a nivel internacional.
+
+[CONCLAT](https://www.conclat.com/) es el Proyecto FONDECYT Regular (No 1230056) “Clases sociales, movimientos sindicales y conflicto en tiempos de crisis: un estudio comparativo de Argentina y Chile”. Patrocinado por la [Universidad de Chile](https://uchile.cl/) y financiado por la Agencia Nacional de Investigación y Desarrollo ([ANID](https://anid.cl/)). 
+
+---
+
+::: {style="display: flex; justify-content: center; align-items: center; gap: 40px; margin-top: 2rem; flex-wrap: wrap;"}
+[![](img/logo_conclat_corto_blanco_fondo_rojo.png){height="80px"}](https://www.conclat.com/)
+
+[![](img/logo_uchile.jpg){height="80px"}](https://uchile.cl/)
+
+[![](img/logo_anid.png){height="80px"}](https://anid.cl/)
+:::
