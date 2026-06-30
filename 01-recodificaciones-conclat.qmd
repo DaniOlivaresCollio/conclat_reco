@@ -1,13 +1,12 @@
 # Recodificaciones Conclat
 
-Capítulo con las recodificaciones solicitadas en el documento *Recodificaciones - 13 mayo 2026*. 
+Capítulo con las recodificaciones a las Bases de Datos de Argentina y Chile.
 
 **Notas de uso**
 
--   Código escrito como **versión genérica** para ambas bases. Donde la codificación difiere entre países (`a07`, `b14`, `d01`, `d03`, `c09`, y la condición *multi* de `b24`), hay bloques separados Chile / Argentina; comentar/descomentar según la base que se procese. Al inicio se define `pais` para activar la rama correspondiente.
--   NS/NR = `-888` y `-999`. Algunas variables tienen además `-777` ("No aplica", p. ej. `d02_01`) o un código de "No aplica" dentro de la escala (p. ej. `b18_04`/`b18_05` = 11).
--   Las variables **multirespuesta** (`b14`, `b15`, `b16`, `b23`, `b27`, `b28`, y `b24` en Argentina) se almacenan como **dígitos concatenados** en una sola columna. Se procesan con `as.character(zap_labels())` + `str_detect()`, no con comparación numérica directa. **Verificar el formato real** de cada una con `frq()` antes de confiar en el resultado (si vinieran como columnas separadas `b14_1`, `b14_2`…, habría que adaptar).
--   Antes de cada recodificación se incluye `frq()` de diagnóstico.
+-   Código escrito como **versión genérica** para ambas bases. Al inicio se define `pais` para activar la rama correspondiente.
+- Donde la codificación difiere entre países (`a07`, `b14`, `d01`, `d03`, `c09`, y la condición *multi* de `b24`), hay bloques separados Chile / Argentina; comentar/descomentar según la base que se procese. 
+-   **`b14` difiere por país**: en Chile es multirespuesta dicotomizada (`b14_cat1`–`b14_cat10`); en Argentina es **respuesta única** (columna `b14`, códigos 1–11). El bloque correspondiente ramifica según `pais`.
 
 ## Preparación
 
@@ -32,8 +31,8 @@ pais <- "cl"   # <- cambiar a "ar" para Argentina
 ### Cargar datos
 
 ```{r datos, message=FALSE, warning=FALSE}
-data <- readRDS("input/data/data-conclat-chile-ES.rds")   # Chile
-# data <- readRDS("input/data/data-conclat-argentina-ES.rds")   # Argentina
+data <- readRDS("input/data/data-conclat-cl-en-clases.rds")   # Chile
+# data <- readRDS("input/data/data-conclat-ar-es-clases.rds")   # Argentina
 ```
 
 ### Helpers
@@ -55,7 +54,7 @@ respondio_multi <- function(df, prefijo, n) {
 }
 ```
 
-> Nota: con dummies 0/1, una opción seleccionada se detecta con `b14_cat1 == 1`. La categoría residual ("otras causas/medidas") se asigna a quienes respondieron la pregunta (`respondio_multi(...)`) pero no marcaron ninguna de las opciones de los grupos principales. Confirmar que el sufijo sea `_cat` y ajustar `n` por variable.
+> Nota: con dummies 0/1, una opción seleccionada se detecta con `b14_cat1 %in% 1`. Se usa `%in% 1` en lugar de `== 1` porque las baterías con skip-pattern (p. ej. `b23`/`b27`, complementarias) dejan `NA` en la batería no contestada: con `== 1` ese `NA` se propaga (`FALSE | NA` da `NA` en R) y rompe las categorías; `%in% 1` devuelve `FALSE` ante `NA`. La categoría residual ("otras causas/medidas") se asigna a quienes respondieron la pregunta (`respondio_multi(...)`) pero no marcaron ninguna opción de los grupos principales.
 
 ## Variables transversales
 
@@ -119,7 +118,7 @@ data <- data %>%
 frq(data$unionized)
 ```
 
-> Nota: Para "afiliados a sindicatos asalariados e independientes", se incluye `b21 %in% c(1,2)` (activo + inactivo), y en `b25`, incluyo solo código 1 (sindicato/agrupamiento de independientes), no colegio profesional ni asociación gremial.
+> Nota: Se incluye `b21 %in% c(1,2)` (activo + inactivo). Para `b25`, incluyo solo código 1 (sindicato/agrupamiento de independientes), no colegio profesional ni asociación gremial; ajustar si la definición de "sindicato" es más amplia.
 
 ### b19_unionized_firm
 
@@ -170,7 +169,7 @@ data <- data %>%
         .econ & !.coll ~ 1,
         !.econ & .coll ~ 2,
         .econ & .coll  ~ 3,
-        .resp_valida   ~ 4,
+        .resp_valida   ~ 4,   # eligió otras opciones (no económica/colectivista)
         .default = NA_real_
       ),
       levels = 1:4,
@@ -188,9 +187,11 @@ data <- data %>%
 frq(data$b23_why_member)
 ```
 
+> Nota: `respondio_multi()` marca como "respuesta válida" a quien seleccionó al menos una opción. Si las opciones NS/NR (códigos 5/6 de b23 ó equivalentes) se dicotomizaron como `_cat` propias, revisar si deben contar como respuesta válida o excluirse.
+
 ### b24_why_not_member
 
-Motivos de no afiliación. **Diferencia de formato**: en Chile `b24` es respuesta única; en Argentina es multirespuesta. Agrupación:
+Motivos de no afiliación. Multirespuesta dicotomizada (`b24_cat1`–`b24_cat8`) en ambos países. Agrupación:
 
 -   1 = Not useful: opciones 1 ("no es útil") + 5 ("prefiero negociar individualmente").
 -   2 = Work-related constraints: opciones 2 ("situación contractual") + 3 ("temo reacción de la empresa").
@@ -200,23 +201,20 @@ Motivos de no afiliación. **Diferencia de formato**: en Chile `b24` es respuest
 ```{r}
 frq(data$b24_cat1)
 
-# b24 multirespuesta dicotomizada (cat1–cat8) en ambos países.
-# %in% 1 (no == 1) para que los NA por skip-pattern cuenten como FALSE
-# y no contaminen la suma .ngrupos.
+# b24 tiene cat1–cat8. Detección por grupo con dummies.
 data <- data %>%
   mutate(
     .useful   = (b24_cat1 %in% 1) | (b24_cat5 %in% 1),
     .work     = (b24_cat2 %in% 1) | (b24_cat3 %in% 1),
     .distrust = (b24_cat4 %in% 1) | (b24_cat6 %in% 1) | (b24_cat7 %in% 1),
     .ngrupos  = .useful + .work + .distrust,
-    .resp_b24 = respondio_multi(., "b24", 8),
     b24_why_not_member = factor(
       case_when(
         .ngrupos == 1 & .useful   ~ 1,
         .ngrupos == 1 & .work     ~ 2,
         .ngrupos == 1 & .distrust ~ 3,
         .ngrupos >= 2             ~ 4,   # Mixed
-        .default = NA_real_           # no contestó la pregunta o solo marcó cat8 (Otra)
+        .default = NA_real_
       ),
       levels = 1:4,
       labels = c(
@@ -233,7 +231,7 @@ data <- data %>%
 frq(data$b24_why_not_member)
 ```
 
-> Nota: la opción 8 ("Otra", `b24_cat8`) no entra en ningún grupo; quien marcó solo esa queda `NA`. Si "Otra" debe ir a "Mixed/Other", añadir `(b24_cat8 == 1) ~ 4` al final del `case_when`. En el codebook chileno b24 figura como respuesta única, pero el tratamiento por dummies es válido igual si la base trae columnas `_cat`.
+> Nota: la opción 8 ("Otra", `b24_cat8`) no entra en ningún grupo; quien marcó solo esa queda `NA`. Si "Otra" debe ir a "Mixed/Other", añadir `(b24_cat8 %in% 1) ~ 4` al final del `case_when`. Verificá con `frq(data$b24_cat1)` que el patrón de NA coincida con el número de afiliados (a quienes no aplica la pregunta); NA inesperados pueden indicar que el universo de la pregunta es otro.
 
 ### b28_why_not_union
 
@@ -246,12 +244,13 @@ Por qué no hay sindicatos en la empresa (solo asalariados, multirespuesta). Agr
 (Opción 1 = "la empresa es muy pequeña" y 7 = "otra" no entran en los dos grupos principales.)
 
 ```{r}
-frq(data$b28)
+frq(data$b28_cat1)
 
+# b28 tiene cat1–cat7.
 data <- data %>%
   mutate(
-    .interest = tiene_opcion(b28, 2) | tiene_opcion(b28, 4) | tiene_opcion(b28, 6),
-    .employer = tiene_opcion(b28, 3) | tiene_opcion(b28, 5),
+    .interest = (b28_cat2 %in% 1) | (b28_cat4 %in% 1) | (b28_cat6 %in% 1),
+    .employer = (b28_cat3 %in% 1) | (b28_cat5 %in% 1),
     b28_why_not_union = factor(
       case_when(
         .interest & !.employer ~ 1,
@@ -269,7 +268,7 @@ data <- data %>%
 frq(data$b28_why_not_union)
 ```
 
-> Nota: casos cuya única respuesta sea 1 ("empresa muy pequeña") o 7 ("otra") quedan `NA`. Decidir si deben ir a una categoría "Other" o a "Mixed".
+> Nota: casos cuya única respuesta sea `b28_cat1` ("empresa muy pequeña") o `b28_cat7` ("otra") quedan `NA`. Decidir si deben ir a una categoría "Other" o a "Mixed".
 
 ### c01 — escala 0 a 10
 
@@ -629,55 +628,84 @@ frq(data$b13_conflict)
 
 ### b14_causes
 
-Multirespuesta. Categórica:
+**Formato distinto por país:**
 
--   1 = Wage-related: opción 1 ("causas salariales").
+-   **Chile**: multirespuesta dicotomizada en `b14_cat1`–`b14_cat10`.
+-   **Argentina**: respuesta única en la columna `b14` (códigos 1–11, donde 10 = encuadramiento sindical, 11 = otros).
+
+Categórica (misma agrupación en ambos):
+
+-   1 = Wage-related: opción 1 (causas salariales).
 -   2 = Employer-management hostility: opciones 2 (trato de superiores) + 7 (no respetó acuerdos) + 8 (incumplimiento normativa).
 -   3 = Collective bargaining problems: opción 3.
--   4 = Work organization, conditions & others: resto. **En Argentina** incluye además "encuadramiento sindical" (código 10).
-
-**Códigos por país** (difieren por el ítem extra de AR):
-
--   Chile: 1=salarial, 2=trato, 3=neg.colectiva, 4=seguridad, 5=despidos, 6=org.trabajo, 7=no respetó acuerdos, 8=incumplimiento normativa, 9=reemplazo por tecnología, 10=Otros.
--   Argentina: 1–9 igual, **10=Encuadramiento sindical, 11=Otros**.
+-   4 = Work organization, conditions & others: resto (en AR incluye encuadramiento sindical, código 10).
 
 ```{r}
-frq(data$b14)
+if (pais == "cl") {
 
-# Como las categorías 1/2/3 usan los mismos códigos en ambos países,
-# y la categoría 4 captura "el resto", no se requiere ramificar por país:
-# "encuadramiento sindical" (AR, código 10) cae automáticamente en categoría 4.
-data <- data %>%
-  mutate(
-    .wage      = tiene_opcion(b14, 1),
-    .hostility = tiene_opcion(b14, 2) | tiene_opcion(b14, 7) | tiene_opcion(b14, 8),
-    .bargain   = tiene_opcion(b14, 3),
-    .resp_b14  = !is.na(zap_labels(b14)) &
-                 !(as.character(zap_labels(b14)) %in% c("-888", "-999")),
-    b14_causes = factor(
-      case_when(
-        .wage      ~ 1,
-        .hostility ~ 2,
-        .bargain   ~ 3,
-        .resp_b14  ~ 4,   # work org, conditions & others (incl. encuadramiento AR)
-        .default = NA_real_
-      ),
-      levels = 1:4,
-      labels = c(
-        "Wage-related",
-        "Employer-management hostility",
-        "Collective bargaining problems",
-        "Work organization, conditions & others"
+  frq(data$b14_cat1)
+
+  # Chile: multirespuesta dicotomizada (cat1–cat10). Prioridad wage > hostility > bargaining.
+  data <- data %>%
+    mutate(
+      .wage      = (b14_cat1 %in% 1),
+      .hostility = (b14_cat2 %in% 1) | (b14_cat7 %in% 1) | (b14_cat8 %in% 1),
+      .bargain   = (b14_cat3 %in% 1),
+      .resp_b14  = respondio_multi(., "b14", 10),
+      b14_causes = factor(
+        case_when(
+          .wage      ~ 1,
+          .hostility ~ 2,
+          .bargain   ~ 3,
+          .resp_b14  ~ 4,
+          .default = NA_real_
+        ),
+        levels = 1:4,
+        labels = c(
+          "Wage-related",
+          "Employer-management hostility",
+          "Collective bargaining problems",
+          "Work organization, conditions & others"
+        )
       )
-    )
-  ) %>%
-  select(-starts_with(".")) %>%
-  set_variable_labels(b14_causes = "Causes of conflict")
+    ) %>%
+    select(-starts_with(".")) %>%
+    set_variable_labels(b14_causes = "Causes of conflict")
+
+} else {
+
+  frq(data$b14)
+
+  # Argentina: respuesta única (códigos 1–11). Comparación numérica directa.
+  data <- data %>%
+    mutate(
+      .b14 = as.numeric(zap_labels(b14)),
+      b14_causes = factor(
+        case_when(
+          .b14 == 1            ~ 1,   # wage
+          .b14 %in% c(2, 7, 8) ~ 2,   # hostility
+          .b14 == 3            ~ 3,   # bargaining
+          .b14 %in% c(4, 5, 6, 9, 10, 11) ~ 4,  # otros (incl. encuadramiento = 10)
+          .default = NA_real_         # -888, -999
+        ),
+        levels = 1:4,
+        labels = c(
+          "Wage-related",
+          "Employer-management hostility",
+          "Collective bargaining problems",
+          "Work organization, conditions & others"
+        )
+      )
+    ) %>%
+    select(-starts_with(".")) %>%
+    set_variable_labels(b14_causes = "Causes of conflict")
+
+}
 
 frq(data$b14_causes)
 ```
 
-> Nota: al ser multirespuesta, el `case_when` impone **prioridad** wage \> hostility \> bargaining \> otros. Si la regla deseada es otra (p. ej. asignar la categoría más frecuente, o tratar combinaciones como una categoría mixta), hay que cambiar la lógica. Verificar si esa prioridad es la intención.
+> Nota: en Chile, al ser multirespuesta, el `case_when` impone **prioridad** wage \> hostility \> bargaining \> otros cuando se marcaron opciones de varios grupos. En Argentina, al ser respuesta única, cada caso cae en un solo grupo sin ambigüedad. Si la regla deseada para Chile es otra (categoría más frecuente, o tratar combinaciones como mixtas), cambiar la lógica del bloque `cl`.
 
 ### b15_measures
 
@@ -690,15 +718,15 @@ Multirespuesta. Categórica:
 (Mismos códigos en CL y AR.)
 
 ```{r}
-frq(data$b15)
+frq(data$b15_cat1)
 
+# b15: cat1–cat7 (mismos en CL y AR).
 data <- data %>%
   mutate(
-    .strike = tiene_opcion(b15, 1) | tiene_opcion(b15, 3) | tiene_opcion(b15, 4) |
-              tiene_opcion(b15, 5) | tiene_opcion(b15, 6),
-    .legal  = tiene_opcion(b15, 2),
-    .resp_b15 = !is.na(zap_labels(b15)) &
-                !(as.character(zap_labels(b15)) %in% c("-888", "-999")),
+    .strike = (b15_cat1 %in% 1) | (b15_cat3 %in% 1) | (b15_cat4 %in% 1) |
+              (b15_cat5 %in% 1) | (b15_cat6 %in% 1),
+    .legal  = (b15_cat2 %in% 1),
+    .resp_b15 = respondio_multi(., "b15", 7),
     b15_measures = factor(
       case_when(
         .strike   ~ 1,
@@ -716,7 +744,7 @@ data <- data %>%
 frq(data$b15_measures)
 ```
 
-> Nota: prioridad strike \> legal \> other. Quien marcó solo "demanda" cae en 2; quien marcó huelga y demanda cae en 1. Confirmar si esa jerarquía es la deseada.
+> Nota: prioridad strike \> legal \> other. Quien marcó solo "demanda" (`b15_cat2`) cae en 2; quien marcó huelga y demanda cae en 1. Confirmar si esa jerarquía es la deseada.
 
 ### b16_union_organizer
 
@@ -726,22 +754,28 @@ Multirespuesta. Dummy: 1 = sindicato (opción 1); 0 = todo el resto.
 -   Argentina: 1=Sindicato, 2=Delegados, 3=Trabajadores autoconvocados.
 
 ```{r}
-frq(data$b16)
+frq(data$b16_cat1)
 
+# b16: cat1–cat3. Sindicato = cat1 en ambos países.
+# Se preserva NA para quienes no respondieron la pregunta (sin conflicto / no aplica):
+# el dummy es 1/0 solo entre quienes marcaron alguna opción de organizador.
 data <- data %>%
   mutate(
+    .resp_b16 = respondio_multi(., "b16", 3),
     b16_union_organizer = case_when(
-      tiene_opcion(b16, 1) ~ 1,
-      .default = 0
+      b16_cat1 %in% 1 ~ 1,
+      .resp_b16       ~ 0,   # respondió pero no fue el sindicato
+      .default = NA_real_    # no respondió la pregunta
     )
   ) %>%
+  select(-starts_with(".")) %>%
   set_variable_labels(b16_union_organizer = "Conflict organized by union (dummy)") %>%
   set_value_labels(b16_union_organizer = c("Union" = 1, "Other" = 0))
 
 frq(data$b16_union_organizer)
 ```
 
-> Nota: el dummy marca 1 si el sindicato está entre los organizadores (aunque haya otros). Si debe ser "sindicato como único organizador", cambiar a detección exclusiva.
+> Nota: el dummy marca 1 si el sindicato está entre los organizadores (aunque haya otros). Si debe ser "sindicato como único organizador", cambiar a detección exclusiva. Quien no respondió la pregunta (sin conflicto previo / no aplica) queda `NA`, no 0; si preferís que todo el universo sea 1/0 con 0 = "no sindicato o no aplica", reemplazá el `.default` por `0`.
 
 ### c04_03 — participación en huelga
 
@@ -959,6 +993,6 @@ El documento solicita "presentar en ambas bases todas las versiones del esquema 
 ## Guardar datos
 
 ```{r}
-if (pais == "cl") saveRDS(data, file = "output/data/datos-recodificados-cl.rds")
-if (pais == "ar") saveRDS(data, file = "output/data/datos-recodificados-ar.rds")
+# if (pais == "cl") saveRDS(data, file = "output/data/datos-recodificados-cl.rds")
+# if (pais == "ar") saveRDS(data, file = "output/data/datos-recodificados-ar.rds")
 ```
