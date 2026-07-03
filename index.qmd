@@ -4,6 +4,8 @@
 
 Este libro corresponde al repositorio de recodificación de la base de datos de la **Encuesta CONCLAT** para Chile y Argentina, para ser incluído como capítulos de libro.
 
+En el [primer capítulo](01-recodificaciones-conclat-cl.html) se encuentra la recodificación para Chile, y en el [segundo capítulo](02-recodificaciones-conclat-ar.html) se encuentra la recodificación para Argentina. 
+
 La Encuesta Conclat se aplica en el marco del Proyecto [CONCLAT](https://www.conclat.com/), que busca estudiar cómo se percibe el conflicto laboral y político en Argentina y Chile. Particularmente, analiza cómo las personas de distintas clases y con distinto estatus sindical perciben el conflicto dentro y fuera del lugar de trabajo. Tiene como propósito contribuir a la investigación internacional sobre clases, trabajo y conflicto produciendo datos cuantitativos originales y un instrumento de investigación comparable a nivel internacional.
 
 [CONCLAT](https://www.conclat.com/) es el Proyecto FONDECYT Regular (No 1230056) “Clases sociales, movimientos sindicales y conflicto en tiempos de crisis: un estudio comparativo de Argentina y Chile”. Patrocinado por la [Universidad de Chile](https://uchile.cl/) y financiado por la Agencia Nacional de Investigación y Desarrollo ([ANID](https://anid.cl/)).
