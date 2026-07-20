@@ -20,8 +20,6 @@ format:
     lang: es
     code-fold: true
     code-summary: "Ver código"
-  pdf:
-    documentclass: scrreprt
 
 editor: visual
 

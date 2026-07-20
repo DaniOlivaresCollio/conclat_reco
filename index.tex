@@ -1,0 +1,3163 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrreprt}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{multirow}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{colortbl}
+\usepackage{pdflscape}
+\usepackage{tabu}
+\usepackage{threeparttable}
+\usepackage{threeparttablex}
+\usepackage[normalem]{ulem}
+\usepackage{makecell}
+\usepackage{xcolor}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{bookmark}{}{\usepackage{bookmark}}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Recodificaciones Datos CONCLAT},
+  pdfauthor={Pablo Pérez-Ahumada, Daniela Olivares-Collío, Javiera Romo},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Recodificaciones Datos CONCLAT}
+\author{Pablo Pérez-Ahumada, Daniela Olivares-Collío, Javiera Romo}
+\date{2026-07-08}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{2}
+\tableofcontents
+}
+
+\bookmarksetup{startatroot}
+
+\chapter*{Presentación}\label{presentaciuxf3n}
+\addcontentsline{toc}{chapter}{Presentación}
+
+\markboth{Presentación}{Presentación}
+
+\includegraphics[width=1\linewidth,height=\textheight,keepaspectratio]{img/banner_conclat_rojo.png}
+
+Este libro corresponde al repositorio de recodificación de la base de
+datos de la \textbf{Encuesta CONCLAT} para Chile y Argentina, para ser
+incluído como capítulos de libro.
+
+En el \href{01-recodificaciones-conclat-cl.html}{primer capítulo} se
+encuentra la recodificación para Chile, y en el
+\href{02-recodificaciones-conclat-ar.html}{segundo capítulo} se
+encuentra la recodificación para Argentina.
+
+La Encuesta Conclat se aplica en el marco del Proyecto
+\href{https://www.conclat.com/}{CONCLAT}, que busca estudiar cómo se
+percibe el conflicto laboral y político en Argentina y Chile.
+Particularmente, analiza cómo las personas de distintas clases y con
+distinto estatus sindical perciben el conflicto dentro y fuera del lugar
+de trabajo. Tiene como propósito contribuir a la investigación
+internacional sobre clases, trabajo y conflicto produciendo datos
+cuantitativos originales y un instrumento de investigación comparable a
+nivel internacional.
+
+\href{https://www.conclat.com/}{CONCLAT} es el Proyecto FONDECYT Regular
+(No 1230056) ``Clases sociales, movimientos sindicales y conflicto en
+tiempos de crisis: un estudio comparativo de Argentina y Chile''.
+Patrocinado por la \href{https://uchile.cl/}{Universidad de Chile} y
+financiado por la Agencia Nacional de Investigación y Desarrollo
+(\href{https://anid.cl/}{ANID}).
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\href{https://www.conclat.com/}{\includegraphics[width=\linewidth,height=0.83333in,keepaspectratio]{img/logo_conclat_corto_blanco_fondo_rojo.png}}
+
+\href{https://uchile.cl/}{\includegraphics[width=\linewidth,height=0.83333in,keepaspectratio]{img/logo_uchile.jpg}}
+
+\href{https://anid.cl/}{\includegraphics[width=\linewidth,height=0.83333in,keepaspectratio]{img/logo_anid.png}}
+
+\bookmarksetup{startatroot}
+
+\chapter{Recodificaciones Conclat
+Chile}\label{recodificaciones-conclat-chile}
+
+Capítulo de recodificaciones para la \textbf{base de datos de Chile}.
+
+\begin{quote}
+Datos actualizados al 07/07/2026.
+\end{quote}
+
+\section{Preparación}\label{preparaciuxf3n}
+
+\subsection{Cargar datos}\label{cargar-datos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}} \FunctionTok{readRDS}\NormalTok{(}\StringTok{"input/data/data{-}conclat{-}cl{-}en{-}clases.rds"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Helpers}\label{helpers}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Escala numérica: conserva el rango original (con sus etiquetas de valor) y}
+\CommentTok{\# manda NS/NR (y otros missing) a NA. A diferencia de usar zap\_labels() (que}
+\CommentTok{\# pela TODAS las etiquetas), acá se modifica el vector labelled directamente:}
+\CommentTok{\# solo se reemplazan por NA los códigos de "missing", y solo se quitan del}
+\CommentTok{\# atributo \textasciigrave{}labels\textasciigrave{} esas mismas entradas, para que no aparezcan como filas}
+\CommentTok{\# fantasma con 0 casos en frq().}
+\NormalTok{rec\_escala }\OtherTok{\textless{}{-}} \ControlFlowTok{function}\NormalTok{(x, }\AttributeTok{missing =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{888}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{999}\NormalTok{)) \{}
+\NormalTok{  x\_num }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(haven}\SpecialCharTok{::}\FunctionTok{zap\_labels}\NormalTok{(x))}
+\NormalTok{  vals }\OtherTok{\textless{}{-}} \FunctionTok{as.numeric}\NormalTok{(haven}\SpecialCharTok{::}\FunctionTok{zap\_labels}\NormalTok{(x))}
+\NormalTok{  x[vals }\SpecialCharTok{\%in\%}\NormalTok{ missing] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\NormalTok{  labs }\OtherTok{\textless{}{-}} \FunctionTok{attr}\NormalTok{(x, }\StringTok{"labels"}\NormalTok{)}
+  \ControlFlowTok{if}\NormalTok{ (}\SpecialCharTok{!}\FunctionTok{is.null}\NormalTok{(labs)) }\FunctionTok{attr}\NormalTok{(x, }\StringTok{"labels"}\NormalTok{) }\OtherTok{\textless{}{-}}\NormalTok{ labs[}\SpecialCharTok{!}\NormalTok{(labs }\SpecialCharTok{\%in\%}\NormalTok{ missing)]}
+\NormalTok{  x}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Variables transversales}\label{variables-transversales}
+
+\subsection{a07\_empl\_sit}\label{a07_empl_sit}
+
+Factor ordenado. En Chile 9 categorías de respuesta en variable
+\texttt{a07}.
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Salaried --\textgreater{} \texttt{a07}: 3--9 = asalariados/otros
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Self-employed --\textgreater{} \texttt{a07}: 2 = Cuenta propia
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Owners --\textgreater{} \texttt{a07}: 1 = Patrón/empleador
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{a07)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Employment relationship (x) <numeric> 
+# total N=3048 valid N=3048 mean=3.79 sd=1.67
+
+Value |                                                              Label
+--------------------------------------------------------------------------
+    1 |                                                           Employer
+    2 |                                               Self-employed worker
+    3 | Public sector employee or worker (Central or Municipal Government)
+    4 |                           Employee or worker of public enterprises
+    5 |                                  Private sector employee or worker
+    6 |                                            Live-in domestic worker
+    7 |                                           Live-out domestic worker
+    8 |                                   Armed Forces and Law Enforcement
+    9 |                                               Unpaid family worker
+ <NA> |                                                               <NA>
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    1 |  344 | 11.29 |   11.29 |  11.29
+    2 |  598 | 19.62 |   19.62 |  30.91
+    3 |  251 |  8.23 |    8.23 |  39.14
+    4 |  337 | 11.06 |   11.06 |  50.20
+    5 | 1371 | 44.98 |   44.98 |  95.18
+    6 |   21 |  0.69 |    0.69 |  95.87
+    7 |  101 |  3.31 |    3.31 |  99.18
+    8 |   13 |  0.43 |    0.43 |  99.61
+    9 |   12 |  0.39 |    0.39 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{a07\_empl\_sit =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+        \FunctionTok{as.numeric}\NormalTok{(a07) }\SpecialCharTok{\%in\%} \DecValTok{3}\SpecialCharTok{:}\DecValTok{9} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,   }\CommentTok{\# Salaried}
+        \FunctionTok{as.numeric}\NormalTok{(a07) }\SpecialCharTok{==} \DecValTok{2}     \SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,   }\CommentTok{\# Self{-}employed}
+        \FunctionTok{as.numeric}\NormalTok{(a07) }\SpecialCharTok{==} \DecValTok{1}     \SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,   }\CommentTok{\# Owners}
+        \AttributeTok{.default =} \ConstantTok{NA\_real\_}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Salaried"}\NormalTok{, }\StringTok{"Self{-}employed"}\NormalTok{, }\StringTok{"Owners"}\NormalTok{),}
+      \AttributeTok{ordered =} \ConstantTok{TRUE}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{a07\_empl\_sit =} \StringTok{"Employment situation (ordered)"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{a07\_empl\_sit)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Employment situation (ordered) (x) <ordinal> 
+# total N=3048 valid N=3048 mean=1.42 sd=0.69
+
+Value         |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+Salaried      | 2106 | 69.09 |   69.09 |  69.09
+Self-employed |  598 | 19.62 |   19.62 |  88.71
+Owners        |  344 | 11.29 |   11.29 | 100.00
+<NA>          |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{unionized}\label{unionized}
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Yes: afiliado a sindicato --\textgreater{} asalariado \texttt{b21}:
+    1 = miembro activo, 2 = miembro inactivo
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Yes: afiliado a sindicato --\textgreater{} independiente
+    \texttt{b25}: 1 = sindicato/agrupamiento de independientes, 2 =
+    colegio profesional
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{-1}
+  \tightlist
+  \item
+    No: resto --\textgreater{} incluye a empresarios y NS/NR
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{-1}
+  \tightlist
+  \item
+    No: resto --\textgreater{} asalariado \texttt{b21}: 3 = No
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{-1}
+  \tightlist
+  \item
+    No: resto --\textgreater{} independiente \texttt{b25}: 3 =
+    asociación gremial, 4 = No
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b21)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Union membership (x) <numeric> 
+# total N=3048 valid N=480 mean=-22.86 sd=147.50
+
+Value |                        Label |    N | Raw % | Valid % | Cum. %
+----------------------------------------------------------------------
+ -999 |      No answer (do not read) |    2 |  0.07 |    0.42 |   0.42
+ -888 |     Don’t know (do not read) |   11 |  0.36 |    2.29 |   2.71
+    1 |   Yes, I am an active member |  270 |  8.86 |   56.25 |  58.96
+    2 | Yes, I am an inactive member |   69 |  2.26 |   14.37 |  73.33
+    3 |                           No |  128 |  4.20 |   26.67 | 100.00
+ <NA> |                         <NA> | 2568 | 84.25 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b25)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Membership in organizations of self-employed workers (x) <numeric> 
+# total N=3048 valid N=942 mean=-53.87 sd=225.46
+
+Value |                                             Label |    N | Raw %
+------------------------------------------------------------------------
+ -999 |                           No answer (do not read) |   23 |  0.75
+ -888 |                          Don’t know (do not read) |   35 |  1.15
+    1 | Independent workers’ union or other type of union |   46 |  1.51
+    2 |                          Professional association |   18 |  0.59
+    3 |                     Trade or business association |   51 |  1.67
+    4 |                                                No |  769 | 25.23
+ <NA> |                                              <NA> | 2106 | 69.09
+
+Value | Valid % | Cum. %
+------------------------
+ -999 |    2.44 |   2.44
+ -888 |    3.72 |   6.16
+    1 |    4.88 |  11.04
+    2 |    1.91 |  12.95
+    3 |    5.41 |  18.37
+    4 |   81.63 | 100.00
+ <NA> |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{unionized =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      b21 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{      b25 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{unionized =} \StringTok{"Union member (Salaried or Self{-}employed; 1 = yes)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{unionized =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{unionized)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Union member (Salaried or Self-employed; 1 = yes) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.13 sd=0.34
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 2645 | 86.78 |   86.78 |  86.78
+    1 |   Yes |  403 | 13.22 |   13.22 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b19\_unionized\_firm}\label{b19_unionized_firm}
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Yes --\textgreater{} \texttt{b19}: 1 = Sí
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{-1}
+  \tightlist
+  \item
+    No --\textgreater{} \texttt{b19}: 2 = No, incluye NS/NR
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b19)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Existence of trade unions in the company (x) <numeric> 
+# total N=3048 valid N=2106 mean=-108.31 sd=296.22
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   36 |  1.18 |    1.71 |   1.71
+ -888 | Don’t know (do not read) |  220 |  7.22 |   10.45 |  12.16
+    1 |           Yes. How many? |  479 | 15.72 |   22.74 |  34.90
+    2 |                       No | 1371 | 44.98 |   65.10 | 100.00
+ <NA> |                     <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{b19\_unionized\_firm =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      b19 }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b19\_unionized\_firm =} \StringTok{"Union present in firm (1 = yes)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{b19\_unionized\_firm =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b19\_unionized\_firm)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Union present in firm (1 = yes) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.16 sd=0.36
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 2569 | 84.28 |   84.28 |  84.28
+    1 |   Yes |  479 | 15.72 |   15.72 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\section{Cap. 2 --- Class, informality, and support for
+unions}\label{cap.-2-class-informality-and-support-for-unions}
+
+\subsection{b23\_why\_member}\label{b23_why_member}
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Pure economic --\textgreater{} asalariados \texttt{b23\_cat1}: 1 =
+    Yes (``más beneficios económicos'')
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Pure economic --\textgreater{} independientes \texttt{b27\_cat1}: 1
+    = Yes (``más beneficios económicos'')
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Pure collectivist --\textgreater{} asalariados \texttt{b23\_cat2}: 1
+    = Yes (``hay que estar unidos para defender derechos'')
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Pure collectivist --\textgreater{} independientes
+    \texttt{b27\_cat2}: 1 = Yes (``hay que estar unidos para defender
+    derechos'')
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Economic and collectivist
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Other
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b23\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for joining a union - Because I have more economic benefits (x) <integer> 
+# total N=3048 valid N=2106 mean=0.10 sd=0.30
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1895 | 62.17 |   89.98 |  89.98
+    1 |  211 |  6.92 |   10.02 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b23\_cat2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for joining a union - Because as workers we need to be united to defend our rights (x) <integer> 
+# total N=3048 valid N=2106 mean=0.08 sd=0.27
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1933 | 63.42 |   91.79 |  91.79
+    1 |  173 |  5.68 |    8.21 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b27\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for joining organizations of self-employed workers - Because I have more economic benefits (x) <integer> 
+# total N=3048 valid N=942 mean=0.06 sd=0.24
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 |  885 | 29.04 |   93.95 |  93.95
+    1 |   57 |  1.87 |    6.05 | 100.00
+ <NA> | 2106 | 69.09 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b27\_cat2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for joining organizations of self-employed workers - Because as self-employed workers we need to be united to defend our rights (x) <integer> 
+# total N=3048 valid N=942 mean=0.05 sd=0.23
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 |  891 | 29.23 |   94.59 |  94.59
+    1 |   51 |  1.67 |    5.41 | 100.00
+ <NA> | 2106 | 69.09 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.econ =}\NormalTok{ (b23\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b27\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.coll =}\NormalTok{ (b23\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b27\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.resp\_valida =} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(b23\_cat1) }\SpecialCharTok{|} \SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(b27\_cat1),}
+    \AttributeTok{b23\_why\_member =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        unionized }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
+\NormalTok{        .econ }\SpecialCharTok{\&} \SpecialCharTok{!}\NormalTok{.coll }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+        \SpecialCharTok{!}\NormalTok{.econ }\SpecialCharTok{\&}\NormalTok{ .coll }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        .econ }\SpecialCharTok{\&}\NormalTok{ .coll  }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{        .resp\_valida   }\SpecialCharTok{\textasciitilde{}} \DecValTok{4}\NormalTok{,}
+        \AttributeTok{.default =} \ConstantTok{NA\_real\_}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Pure economic motivation"}\NormalTok{,}
+        \StringTok{"Pure collectivist motivation"}\NormalTok{,}
+        \StringTok{"Economic and collectivist motivations"}\NormalTok{,}
+        \StringTok{"Other"}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b23\_why\_member =} \StringTok{"Reason for union membership"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b23\_why\_member)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reason for union membership (x) <categorical> 
+# total N=3048 valid N=403 mean=2.26 sd=1.09
+
+Value                                 |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------------
+Pure economic motivation              |  137 |  4.49 |   34.00 |  34.00
+Pure collectivist motivation          |   90 |  2.95 |   22.33 |  56.33
+Economic and collectivist motivations |  112 |  3.67 |   27.79 |  84.12
+Other                                 |   64 |  2.10 |   15.88 | 100.00
+<NA>                                  | 2645 | 86.78 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b24\_why\_not\_member}\label{b24_why_not_member}
+
+Motivos de no afiliación. Multirespuesta dicotomizada
+(\texttt{b24\_cat1}--\texttt{b24\_cat8}). Agrupación:
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Not useful --\textgreater{} \texttt{b24\_cat1}: 1 = Yes (no es útil)
+    + \texttt{b24\_cat5}: 1 = Yes (prefiero negociar individualmente).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Work-related constraints --\textgreater{} \texttt{b24\_cat2}: 1 =
+    Yes (situación contractual) + \texttt{b24\_cat3}: 1 = Yes (temo
+    reacción de la empresa).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Don't trust union leaders --\textgreater{} \texttt{b24\_cat4}: 1 =
+    Yes (alineados con empresa) + \texttt{b24\_cat6}: 1 = Yes
+    (politizados) + \texttt{b24\_cat7}: 1 = Yes (corruptos).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{3}
+  \tightlist
+  \item
+    Mixed reasons: combinación de ≥2 grupos + \texttt{b24\_cat8}: 1 =
+    Yes (Otro).
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - I do not consider it useful (x) <integer> 
+# total N=3048 valid N=2106 mean=0.02 sd=0.13
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2071 | 67.95 |   98.34 |  98.34
+    1 |   35 |  1.15 |    1.66 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - I cannot due to my contractual situation (x) <integer> 
+# total N=3048 valid N=2106 mean=0.01 sd=0.12
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2076 | 68.11 |   98.58 |  98.58
+    1 |   30 |  0.98 |    1.42 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - I fear the company would react badly if I joined (x) <integer> 
+# total N=3048 valid N=2106 mean=0.00 sd=0.06
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2099 | 68.86 |   99.67 |  99.67
+    1 |    7 |  0.23 |    0.33 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - Union leaders are too aligned with the company (x) <integer> 
+# total N=3048 valid N=2106 mean=0.00 sd=0.06
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2099 | 68.86 |   99.67 |  99.67
+    1 |    7 |  0.23 |    0.33 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - I prefer to negotiate individually (x) <integer> 
+# total N=3048 valid N=2106 mean=0.01 sd=0.11
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2080 | 68.24 |   98.77 |  98.77
+    1 |   26 |  0.85 |    1.23 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_cat6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for not joining a union - Union leaders are too politicized (x) <integer> 
+# total N=3048 valid N=2106 mean=0.01 sd=0.08
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2091 | 68.60 |   99.29 |  99.29
+    1 |   15 |  0.49 |    0.71 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.useful   =}\NormalTok{ (b24\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b24\_cat5 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.work     =}\NormalTok{ (b24\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b24\_cat3 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.distrust =}\NormalTok{ (b24\_cat4 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b24\_cat6 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b24\_cat7 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.ngrupos  =}\NormalTok{ .useful }\SpecialCharTok{+}\NormalTok{ .work }\SpecialCharTok{+}\NormalTok{ .distrust,}
+    \AttributeTok{b24\_why\_not\_member =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        .ngrupos }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ .useful   }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        .ngrupos }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ .work     }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        .ngrupos }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\&}\NormalTok{ .distrust }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{        .ngrupos }\SpecialCharTok{\textgreater{}=} \DecValTok{2}             \SpecialCharTok{\textasciitilde{}} \DecValTok{4}\NormalTok{,}
+\NormalTok{        b24\_cat8 }\SpecialCharTok{\%in\%} \DecValTok{1}           \SpecialCharTok{\textasciitilde{}} \DecValTok{4}\NormalTok{,}
+        \AttributeTok{.default =} \ConstantTok{NA\_real\_}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Not useful"}\NormalTok{,}
+        \StringTok{"Work{-}related constraints"}\NormalTok{,}
+        \StringTok{"Don\textquotesingle{}t trust union leaders"}\NormalTok{,}
+        \StringTok{"Mixed reasons"}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b24\_why\_not\_member =} \StringTok{"Reason for not being a union member"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b24\_why\_not\_member)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reason for not being a union member (x) <categorical> 
+# total N=3048 valid N=114 mean=2.22 sd=1.20
+
+Value                     |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------
+Not useful                |   43 |  1.41 |   37.72 |  37.72
+Work-related constraints  |   31 |  1.02 |   27.19 |  64.91
+Don't trust union leaders |   12 |  0.39 |   10.53 |  75.44
+Mixed reasons             |   28 |  0.92 |   24.56 | 100.00
+<NA>                      | 2934 | 96.26 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b28\_why\_not\_union}\label{b28_why_not_union}
+
+Por qué no hay sindicatos en la empresa (solo asalariados).
+Multirespuesta (\texttt{b28\_cat1}--\texttt{b28\_cat7}):
+
+\begin{itemize}
+\tightlist
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \tightlist
+  \item
+    Lack of interest --\textgreater{} \texttt{b28\_cat2}: 1 = Yes (no
+    hay interés) + \texttt{b28\_cat4}: 1 = Yes (no han sabido
+    organizarse) + \texttt{b28\_cat6}: 1 = Yes (prefieren negociar por
+    su cuenta).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{1}
+  \tightlist
+  \item
+    Employer opposition --\textgreater{} \texttt{b28\_cat3}: 1 = Yes
+    (temor a represalias) + \texttt{b28\_cat5}: 1 = Yes (la empresa pone
+    dificultades).
+  \end{enumerate}
+\item
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \setcounter{enumi}{2}
+  \tightlist
+  \item
+    Mixed reasons --\textgreater{} combinación de ≥2 grupos +
+    \texttt{b28\_cat1}: 1 = Yes (empresa muy pequeña) +
+    \texttt{b28\_cat7}: 1 = Yes (Otra)
+  \end{enumerate}
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - The company is too small (x) <integer> 
+# total N=3048 valid N=2106 mean=0.23 sd=0.42
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1613 | 52.92 |   76.59 |  76.59
+    1 |  493 | 16.17 |   23.41 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - There is no interest among workers (x) <integer> 
+# total N=3048 valid N=2106 mean=0.16 sd=0.37
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1770 | 58.07 |   84.05 |  84.05
+    1 |  336 | 11.02 |   15.95 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat3)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - Fear of retaliation by supervisors (x) <integer> 
+# total N=3048 valid N=2106 mean=0.07 sd=0.25
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1967 | 64.53 |   93.40 |  93.40
+    1 |  139 |  4.56 |    6.60 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat4)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - Workers have not known how to organize (x) <integer> 
+# total N=3048 valid N=2106 mean=0.07 sd=0.26
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1952 | 64.04 |   92.69 |  92.69
+    1 |  154 |  5.05 |    7.31 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat5)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - The company creates obstacles (x) <integer> 
+# total N=3048 valid N=2106 mean=0.04 sd=0.20
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2015 | 66.11 |   95.68 |  95.68
+    1 |   91 |  2.99 |    4.32 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat6)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - Workers prefer to negotiate on their own (x) <integer> 
+# total N=3048 valid N=2106 mean=0.09 sd=0.29
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1914 | 62.80 |   90.88 |  90.88
+    1 |  192 |  6.30 |    9.12 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_cat7)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reasons for absence of unions in the company - Other. Which one? (x) <integer> 
+# total N=3048 valid N=2106 mean=0.04 sd=0.20
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2019 | 66.24 |   95.87 |  95.87
+    1 |   87 |  2.85 |    4.13 | 100.00
+ <NA> |  942 | 30.91 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.interest =}\NormalTok{ (b28\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b28\_cat4 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b28\_cat6 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.employer =}\NormalTok{ (b28\_cat3 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b28\_cat5 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{b28\_why\_not\_union =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        .interest }\SpecialCharTok{\&} \SpecialCharTok{!}\NormalTok{.employer }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+        \SpecialCharTok{!}\NormalTok{.interest }\SpecialCharTok{\&}\NormalTok{ .employer }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        .interest }\SpecialCharTok{\&}\NormalTok{ .employer  }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{        b28\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}        \SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+\NormalTok{        b28\_cat7 }\SpecialCharTok{\%in\%} \DecValTok{1}        \SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{.default =} \ConstantTok{NA\_real\_}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Lack of interest"}\NormalTok{, }\StringTok{"Employer opposition"}\NormalTok{, }\StringTok{"Mixed reasons"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b28\_why\_not\_union =} \StringTok{"Reason for no union in firm"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b28\_why\_not\_union)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Reason for no union in firm (x) <categorical> 
+# total N=3048 valid N=1150 mean=2.04 sd=0.95
+
+Value               |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------------
+Lack of interest    |  491 | 16.11 |   42.70 |  42.70
+Employer opposition |  121 |  3.97 |   10.52 |  53.22
+Mixed reasons       |  538 | 17.65 |   46.78 | 100.00
+<NA>                | 1898 | 62.27 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c01 --- escala 0 a 10}\label{c01-escala-0-a-10}
+
+\texttt{c01\_01}--\texttt{c01\_05}: conservar escala 0--10, NS/NR → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c01\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Importance of unions for: Achieving better wages and working conditions (x) <numeric> 
+# total N=3048 valid N=3048 mean=-33.20 sd=186.69
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  33 |  1.08 |    1.08 |   1.08
+ -888 | Don’t know (do not read) |  97 |  3.18 |    3.18 |   4.27
+    0 |   0 Not important at all | 123 |  4.04 |    4.04 |   8.30
+    1 |                        1 |  51 |  1.67 |    1.67 |   9.97
+    2 |                        2 | 101 |  3.31 |    3.31 |  13.29
+    3 |                        3 | 192 |  6.30 |    6.30 |  19.59
+    4 |                        4 | 271 |  8.89 |    8.89 |  28.48
+    5 |                        5 | 509 | 16.70 |   16.70 |  45.18
+    6 |                        6 | 390 | 12.80 |   12.80 |  57.97
+    7 |                        7 | 324 | 10.63 |   10.63 |  68.60
+    8 |                        8 | 283 |  9.28 |    9.28 |  77.89
+    9 |                        9 | 159 |  5.22 |    5.22 |  83.10
+   10 |        10 Very important | 515 | 16.90 |   16.90 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c01\_02)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Importance of unions for: Reducing income inequality in the country (x) <numeric> 
+# total N=3048 valid N=3048 mean=-34.76 sd=189.62
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  28 |  0.92 |    0.92 |   0.92
+ -888 | Don’t know (do not read) | 108 |  3.54 |    3.54 |   4.46
+    0 |   0 Not important at all | 118 |  3.87 |    3.87 |   8.33
+    1 |                        1 |  41 |  1.35 |    1.35 |   9.68
+    2 |                        2 |  90 |  2.95 |    2.95 |  12.63
+    3 |                        3 | 179 |  5.87 |    5.87 |  18.50
+    4 |                        4 | 263 |  8.63 |    8.63 |  27.13
+    5 |                        5 | 532 | 17.45 |   17.45 |  44.59
+    6 |                        6 | 409 | 13.42 |   13.42 |  58.01
+    7 |                        7 | 332 | 10.89 |   10.89 |  68.90
+    8 |                        8 | 317 | 10.40 |   10.40 |  79.30
+    9 |                        9 | 162 |  5.31 |    5.31 |  84.61
+   10 |        10 Very important | 469 | 15.39 |   15.39 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{c01\_01\_work\_conditions  =} \FunctionTok{rec\_escala}\NormalTok{(c01\_01),}
+    \AttributeTok{c01\_02\_reduce\_ineq      =} \FunctionTok{rec\_escala}\NormalTok{(c01\_02),}
+    \AttributeTok{c01\_03\_protect\_women    =} \FunctionTok{rec\_escala}\NormalTok{(c01\_03),}
+    \AttributeTok{c01\_04\_protect\_informal =} \FunctionTok{rec\_escala}\NormalTok{(c01\_04),}
+    \AttributeTok{c01\_05\_conciliation     =} \FunctionTok{rec\_escala}\NormalTok{(c01\_05)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{c01\_01\_work\_conditions  =} \StringTok{"Unions: better wages \& conditions (0{-}10)"}\NormalTok{,}
+    \AttributeTok{c01\_02\_reduce\_ineq      =} \StringTok{"Unions: reduce inequality (0{-}10)"}\NormalTok{,}
+    \AttributeTok{c01\_03\_protect\_women    =} \StringTok{"Unions: protect working women (0{-}10)"}\NormalTok{,}
+    \AttributeTok{c01\_04\_protect\_informal =} \StringTok{"Unions: protect informal workers (0{-}10)"}\NormalTok{,}
+    \AttributeTok{c01\_05\_conciliation     =} \StringTok{"Unions: work{-}life conciliation (0{-}10)"}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c01\_01\_work\_conditions)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Unions: better wages & conditions (0-10) (x) <numeric> 
+# total N=3048 valid N=2918 mean=6.14 sd=2.73
+
+Value |                  Label |   N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------
+    0 | 0 Not important at all | 123 |  4.04 |    4.22 |   4.22
+    1 |                      1 |  51 |  1.67 |    1.75 |   5.96
+    2 |                      2 | 101 |  3.31 |    3.46 |   9.42
+    3 |                      3 | 192 |  6.30 |    6.58 |  16.00
+    4 |                      4 | 271 |  8.89 |    9.29 |  25.29
+    5 |                      5 | 509 | 16.70 |   17.44 |  42.73
+    6 |                      6 | 390 | 12.80 |   13.37 |  56.10
+    7 |                      7 | 324 | 10.63 |   11.10 |  67.20
+    8 |                      8 | 283 |  9.28 |    9.70 |  76.90
+    9 |                      9 | 159 |  5.22 |    5.45 |  82.35
+   10 |      10 Very important | 515 | 16.90 |   17.65 | 100.00
+ <NA> |                   <NA> | 130 |  4.27 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c01\_02\_reduce\_ineq)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Unions: reduce inequality (0-10) (x) <numeric> 
+# total N=3048 valid N=2912 mean=6.16 sd=2.65
+
+Value |                  Label |   N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------
+    0 | 0 Not important at all | 118 |  3.87 |    4.05 |   4.05
+    1 |                      1 |  41 |  1.35 |    1.41 |   5.46
+    2 |                      2 |  90 |  2.95 |    3.09 |   8.55
+    3 |                      3 | 179 |  5.87 |    6.15 |  14.70
+    4 |                      4 | 263 |  8.63 |    9.03 |  23.73
+    5 |                      5 | 532 | 17.45 |   18.27 |  42.00
+    6 |                      6 | 409 | 13.42 |   14.05 |  56.04
+    7 |                      7 | 332 | 10.89 |   11.40 |  67.45
+    8 |                      8 | 317 | 10.40 |   10.89 |  78.33
+    9 |                      9 | 162 |  5.31 |    5.56 |  83.89
+   10 |      10 Very important | 469 | 15.39 |   16.11 | 100.00
+ <NA> |                   <NA> | 136 |  4.46 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c02\_militant\_unions}\label{c02_militant_unions}
+
+Escala 0--10, NS/NR → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c02)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning: The table contains very wide columns that don't fit into the available
+  display-width of the console. Splitting tables into multiple parts did
+  not have the desired effect.
+\end{verbatim}
+
+\begin{verbatim}
+Preferred role of trade unions (x) <numeric> 
+# total N=3048 valid N=3048 mean=-72.47 sd=257.56
+
+Value
+-----
+ -999
+ -888
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+   10
+ <NA>
+
+                                                                                    Label
+-----------------------------------------------------------------------------------------
+                                                                  No answer (do not read)
+                                                                 Don’t know (do not read)
+                           0 I prefer unions that prioritize collaboration with companies
+                                                                                        1
+                                                                                        2
+                                                                                        3
+                                                                                        4
+                                                                                        5
+                                                                                        6
+                                                                                        7
+                                                                                        8
+                                                                                        9
+10 I prefer unions that are not afraid to confront companies when defending their members
+                                                                                     <NA>
+
+  N | Raw % | Valid % | Cum. %
+------------------------------
+ 62 |  2.03 |    2.03 |   2.03
+198 |  6.50 |    6.50 |   8.53
+124 |  4.07 |    4.07 |  12.60
+ 67 |  2.20 |    2.20 |  14.80
+172 |  5.64 |    5.64 |  20.44
+226 |  7.41 |    7.41 |  27.85
+318 | 10.43 |   10.43 |  38.29
+484 | 15.88 |   15.88 |  54.17
+229 |  7.51 |    7.51 |  61.68
+202 |  6.63 |    6.63 |  68.31
+125 |  4.10 |    4.10 |  72.41
+ 99 |  3.25 |    3.25 |  75.66
+742 | 24.34 |   24.34 | 100.00
+  0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{c02\_militant\_unions =} \FunctionTok{rec\_escala}\NormalTok{(c02)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{c02\_militant\_unions =} \StringTok{"Preference for union role (0{-}10)"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c02\_militant\_unions)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Warning: The table contains very wide columns that don't fit into the available
+  display-width of the console. Splitting tables into multiple parts did
+  not have the desired effect.
+\end{verbatim}
+
+\begin{verbatim}
+Preference for union role (0-10) (x) <numeric> 
+# total N=3048 valid N=2788 mean=6.05 sd=3.06
+
+Value
+-----
+    0
+    1
+    2
+    3
+    4
+    5
+    6
+    7
+    8
+    9
+   10
+ <NA>
+
+                                                                                    Label
+-----------------------------------------------------------------------------------------
+                           0 I prefer unions that prioritize collaboration with companies
+                                                                                        1
+                                                                                        2
+                                                                                        3
+                                                                                        4
+                                                                                        5
+                                                                                        6
+                                                                                        7
+                                                                                        8
+                                                                                        9
+10 I prefer unions that are not afraid to confront companies when defending their members
+                                                                                     <NA>
+
+  N | Raw % | Valid % | Cum. %
+------------------------------
+124 |  4.07 |    4.45 |   4.45
+ 67 |  2.20 |    2.40 |   6.85
+172 |  5.64 |    6.17 |  13.02
+226 |  7.41 |    8.11 |  21.13
+318 | 10.43 |   11.41 |  32.53
+484 | 15.88 |   17.36 |  49.89
+229 |  7.51 |    8.21 |  58.11
+202 |  6.63 |    7.25 |  65.35
+125 |  4.10 |    4.48 |  69.84
+ 99 |  3.25 |    3.55 |  73.39
+742 | 24.34 |   26.61 | 100.00
+260 |  8.53 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b29\_would\_join\_three y
+b29\_would\_join\_d}\label{b29_would_join_three-y-b29_would_join_d}
+
+\texttt{b29}: 1 = Def. no, 2 = Prob. no, 3 = Tal vez, 4 = Prob. sí, 5 =
+Def. sí.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{b29\_would\_join\_three}: 1--3 ordenado: \{1,2\}→1 (no),
+  \{3\}→2 (tal vez), \{4,5\}→3 (sí).
+\item
+  \texttt{b29\_would\_join\_d}: 1 = tal vez/prob./def. sí (3,4,5); 0 =
+  resto (incl.~NS/NR).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b29)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Likelihood of joining a union (x) <numeric> 
+# total N=3048 valid N=3048 mean=-71.60 sd=250.38
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  49 |  1.61 |    1.61 |   1.61
+ -888 | Don’t know (do not read) | 200 |  6.56 |    6.56 |   8.17
+    1 |           Definitely not | 525 | 17.22 |   17.22 |  25.39
+    2 |             Probably not | 396 | 12.99 |   12.99 |  38.39
+    3 |                    Maybe | 885 | 29.04 |   29.04 |  67.42
+    4 |             Probably yes | 631 | 20.70 |   20.70 |  88.12
+    5 |           Definitely yes | 362 | 11.88 |   11.88 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{b29\_would\_join\_three =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        b29 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        b29 }\SpecialCharTok{==} \DecValTok{3}         \SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        b29 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{.default =} \ConstantTok{NA\_real\_}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"No"}\NormalTok{, }\StringTok{"Maybe"}\NormalTok{, }\StringTok{"Yes"}\NormalTok{),}
+      \AttributeTok{ordered =} \ConstantTok{TRUE}
+\NormalTok{    ),}
+    \AttributeTok{b29\_would\_join\_d =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      b29 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{b29\_would\_join\_three =} \StringTok{"Would join a union (1{-}3, ordered)"}\NormalTok{,}
+    \AttributeTok{b29\_would\_join\_d     =} \StringTok{"Would join a union (dummy)"}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{b29\_would\_join\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b29\_would\_join\_three)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Would join a union (1-3, ordered) (x) <ordinal> 
+# total N=3048 valid N=2799 mean=2.03 sd=0.83
+
+Value |   N | Raw % | Valid % | Cum. %
+--------------------------------------
+No    | 921 | 30.22 |   32.90 |  32.90
+Maybe | 885 | 29.04 |   31.62 |  64.52
+Yes   | 993 | 32.58 |   35.48 | 100.00
+<NA>  | 249 |  8.17 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b29\_would\_join\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Would join a union (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.62 sd=0.49
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 1170 | 38.39 |   38.39 |  38.39
+    1 |   Yes | 1878 | 61.61 |   61.61 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c15 --- confianza en
+instituciones}\label{c15-confianza-en-instituciones}
+
+Seis ítems: \texttt{c15\_01} partidos, \texttt{c15\_02} sindicatos,
+\texttt{c15\_03} grandes empresas, \texttt{c15\_04} centrales
+sindicales, \texttt{c15\_05} gremios empresariales, \texttt{c15\_06}
+poder judicial. Escala 1--5 (1 = Nada \ldots{} 5 = Mucha).
+
+\begin{itemize}
+\tightlist
+\item
+  Versión numérica: escala 1--5, NS/NR → NA.
+\item
+  Versión dummy: 1 = ``Algo'' + ``Bastante'' (códigos 3 y 4); 0 = resto
+  (incl.~NS/NR).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Political parties (x) <numeric> 
+# total N=3048 valid N=3048 mean=-26.58 sd=159.36
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   22 |  0.72 |    0.72 |   0.72
+ -888 | Don’t know (do not read) |   73 |  2.40 |    2.40 |   3.12
+    1 |                     None | 1437 | 47.15 |   47.15 |  50.26
+    2 |                   Little |  601 | 19.72 |   19.72 |  69.98
+    3 |                     Some |  558 | 18.31 |   18.31 |  88.29
+    4 |              Quite a lot |  301 |  9.88 |    9.88 |  98.16
+    5 |                    A lot |   56 |  1.84 |    1.84 | 100.00
+ <NA> |                     <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_02)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Trade unions (x) <numeric> 
+# total N=3048 valid N=3048 mean=-36.83 sd=185.08
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  21 |  0.69 |    0.69 |   0.69
+ -888 | Don’t know (do not read) | 111 |  3.64 |    3.64 |   4.33
+    1 |                     None | 767 | 25.16 |   25.16 |  29.49
+    2 |                   Little | 740 | 24.28 |   24.28 |  53.77
+    3 |                     Some | 761 | 24.97 |   24.97 |  78.74
+    4 |              Quite a lot | 490 | 16.08 |   16.08 |  94.82
+    5 |                    A lot | 158 |  5.18 |    5.18 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_03)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Large companies (x) <numeric> 
+# total N=3048 valid N=3048 mean=-20.80 sd=143.53
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  16 |  0.52 |    0.52 |   0.52
+ -888 | Don’t know (do not read) |  61 |  2.00 |    2.00 |   2.53
+    1 |                     None | 925 | 30.35 |   30.35 |  32.87
+    2 |                   Little | 844 | 27.69 |   27.69 |  60.56
+    3 |                     Some | 756 | 24.80 |   24.80 |  85.37
+    4 |              Quite a lot | 368 | 12.07 |   12.07 |  97.44
+    5 |                    A lot |  78 |  2.56 |    2.56 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_04)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Trade union confederations (e.g., CUT) (x) <numeric> 
+# total N=3048 valid N=3048 mean=-51.22 sd=213.58
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  24 |  0.79 |    0.79 |   0.79
+ -888 | Don’t know (do not read) | 156 |  5.12 |    5.12 |   5.91
+    1 |                     None | 974 | 31.96 |   31.96 |  37.86
+    2 |                   Little | 772 | 25.33 |   25.33 |  63.19
+    3 |                     Some | 702 | 23.03 |   23.03 |  86.22
+    4 |              Quite a lot | 324 | 10.63 |   10.63 |  96.85
+    5 |                    A lot |  96 |  3.15 |    3.15 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_05)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Business associations (e.g., SOFOFA or CPC) (x) <numeric> 
+# total N=3048 valid N=3048 mean=-73.94 sd=250.22
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   19 |  0.62 |    0.62 |   0.62
+ -888 | Don’t know (do not read) |  239 |  7.84 |    7.84 |   8.46
+    1 |                     None | 1020 | 33.46 |   33.46 |  41.93
+    2 |                   Little |  844 | 27.69 |   27.69 |  69.62
+    3 |                     Some |  605 | 19.85 |   19.85 |  89.47
+    4 |              Quite a lot |  269 |  8.83 |    8.83 |  98.29
+    5 |                    A lot |   52 |  1.71 |    1.71 | 100.00
+ <NA> |                     <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_06)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of trust in: Judicial system (x) <numeric> 
+# total N=3048 valid N=3048 mean=-18.88 sd=138.10
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   19 |  0.62 |    0.62 |   0.62
+ -888 | Don’t know (do not read) |   51 |  1.67 |    1.67 |   2.30
+    1 |                     None | 1053 | 34.55 |   34.55 |  36.84
+    2 |                   Little |  719 | 23.59 |   23.59 |  60.43
+    3 |                     Some |  706 | 23.16 |   23.16 |  83.60
+    4 |              Quite a lot |  390 | 12.80 |   12.80 |  96.39
+    5 |                    A lot |  110 |  3.61 |    3.61 | 100.00
+ <NA> |                     <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c15\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"c15\_01"}\NormalTok{, }\StringTok{"c15\_02"}\NormalTok{, }\StringTok{"c15\_03"}\NormalTok{, }\StringTok{"c15\_04"}\NormalTok{, }\StringTok{"c15\_05"}\NormalTok{, }\StringTok{"c15\_06"}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(c15\_items), rec\_escala, }\AttributeTok{.names =} \StringTok{"\{.col\}\_num"}\NormalTok{))}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}
+    \FunctionTok{all\_of}\NormalTok{(c15\_items),}
+    \SpecialCharTok{\textasciitilde{}} \FunctionTok{if\_else}\NormalTok{(.x }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{3}\NormalTok{, }\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{), }\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{),}
+    \AttributeTok{.names =} \StringTok{"\{.col\}\_d"}
+\NormalTok{  ))}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{c15\_01\_trust\_parties         =}\NormalTok{ c15\_01\_num,}
+    \AttributeTok{c15\_02\_trust\_unions          =}\NormalTok{ c15\_02\_num,}
+    \AttributeTok{c15\_03\_trust\_companies       =}\NormalTok{ c15\_03\_num,}
+    \AttributeTok{c15\_04\_trust\_laborconfed     =}\NormalTok{ c15\_04\_num,}
+    \AttributeTok{c15\_05\_trust\_employerassoc   =}\NormalTok{ c15\_05\_num,}
+    \AttributeTok{c15\_06\_trust\_judiciary       =}\NormalTok{ c15\_06\_num,}
+    \AttributeTok{c15\_01\_trust\_parties\_d       =}\NormalTok{ c15\_01\_d,}
+    \AttributeTok{c15\_02\_trust\_unions\_d        =}\NormalTok{ c15\_02\_d,}
+    \AttributeTok{c15\_03\_trust\_companies\_d     =}\NormalTok{ c15\_03\_d,}
+    \AttributeTok{c15\_04\_trust\_laborconfed\_d   =}\NormalTok{ c15\_04\_d,}
+    \AttributeTok{c15\_05\_trust\_employerassoc\_d =}\NormalTok{ c15\_05\_d,}
+    \AttributeTok{c15\_06\_trust\_judiciary\_d     =}\NormalTok{ c15\_06\_d}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{c15\_01\_trust\_parties         =} \StringTok{"Trust in political parties (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_02\_trust\_unions          =} \StringTok{"Trust in unions (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_03\_trust\_companies       =} \StringTok{"Trust in big companies (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_04\_trust\_laborconfed     =} \StringTok{"Trust in labor confederations (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_05\_trust\_employerassoc   =} \StringTok{"Trust in employer associations (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_06\_trust\_judiciary       =} \StringTok{"Trust in judiciary (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c15\_01\_trust\_parties\_d       =} \StringTok{"Trust in political parties (dummy)"}\NormalTok{,}
+    \AttributeTok{c15\_02\_trust\_unions\_d        =} \StringTok{"Trust in unions (dummy)"}\NormalTok{,}
+    \AttributeTok{c15\_03\_trust\_companies\_d     =} \StringTok{"Trust in big companies (dummy)"}\NormalTok{,}
+    \AttributeTok{c15\_04\_trust\_laborconfed\_d   =} \StringTok{"Trust in labor confederations (dummy)"}\NormalTok{,}
+    \AttributeTok{c15\_05\_trust\_employerassoc\_d =} \StringTok{"Trust in employer associations (dummy)"}\NormalTok{,}
+    \AttributeTok{c15\_06\_trust\_judiciary\_d     =} \StringTok{"Trust in judiciary (dummy)"}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_01\_trust\_parties)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in political parties (1-5) (x) <numeric> 
+# total N=3048 valid N=2953 mean=1.96 sd=1.12
+
+Value |       Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------------
+    1 |        None | 1437 | 47.15 |   48.66 |  48.66
+    2 |      Little |  601 | 19.72 |   20.35 |  69.01
+    3 |        Some |  558 | 18.31 |   18.90 |  87.91
+    4 | Quite a lot |  301 |  9.88 |   10.19 |  98.10
+    5 |       A lot |   56 |  1.84 |    1.90 | 100.00
+ <NA> |        <NA> |   95 |  3.12 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_01\_trust\_parties\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in political parties (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.30 sd=0.46
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2133 | 69.98 |   69.98 |  69.98
+    1 |  915 | 30.02 |   30.02 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_02\_trust\_unions)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in unions (1-5) (x) <numeric> 
+# total N=3048 valid N=2916 mean=2.50 sd=1.20
+
+Value |       Label |   N | Raw % | Valid % | Cum. %
+----------------------------------------------------
+    1 |        None | 767 | 25.16 |   26.30 |  26.30
+    2 |      Little | 740 | 24.28 |   25.38 |  51.68
+    3 |        Some | 761 | 24.97 |   26.10 |  77.78
+    4 | Quite a lot | 490 | 16.08 |   16.80 |  94.58
+    5 |       A lot | 158 |  5.18 |    5.42 | 100.00
+ <NA> |        <NA> | 132 |  4.33 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_02\_trust\_unions\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in unions (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.46 sd=0.50
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1639 | 53.77 |   53.77 |  53.77
+    1 | 1409 | 46.23 |   46.23 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_03\_trust\_companies)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in big companies (1-5) (x) <numeric> 
+# total N=3048 valid N=2971 mean=2.27 sd=1.11
+
+Value |       Label |   N | Raw % | Valid % | Cum. %
+----------------------------------------------------
+    1 |        None | 925 | 30.35 |   31.13 |  31.13
+    2 |      Little | 844 | 27.69 |   28.41 |  59.54
+    3 |        Some | 756 | 24.80 |   25.45 |  84.99
+    4 | Quite a lot | 368 | 12.07 |   12.39 |  97.37
+    5 |       A lot |  78 |  2.56 |    2.63 | 100.00
+ <NA> |        <NA> |  77 |  2.53 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c15\_03\_trust\_companies\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Trust in big companies (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.39 sd=0.49
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 1846 | 60.56 |   60.56 |  60.56
+    1 | 1202 | 39.44 |   39.44 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\section{Cap. 3 --- Labor Unions, Class Consciousness, and Political
+Identities}\label{cap.-3-labor-unions-class-consciousness-and-political-identities}
+
+\subsection{Escalas 1--5 (c05, c06, c07,
+c14)}\label{escalas-15-c05-c06-c07-c14}
+
+Conservar escala 1--5 (numérica), NS/NR → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c05\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of agreement with: Large business owners have too much power in Chile (x) <numeric> 
+# total N=3048 valid N=3048 mean=-34.36 sd=182.77
+
+Value |                      Label |    N | Raw % | Valid % | Cum. %
+--------------------------------------------------------------------
+ -999 |    No answer (do not read) |   21 |  0.69 |    0.69 |   0.69
+ -888 |   Don’t know (do not read) |  107 |  3.51 |    3.51 |   4.20
+    1 |          Strongly disagree |   89 |  2.92 |    2.92 |   7.12
+    2 |                   Disagree |  172 |  5.64 |    5.64 |  12.76
+    3 | Neither agree nor disagree |  586 | 19.23 |   19.23 |  31.99
+    4 |                      Agree | 1289 | 42.29 |   42.29 |  74.28
+    5 |             Strongly agree |  784 | 25.72 |   25.72 | 100.00
+ <NA> |                       <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{escala\_1a5\_cap3 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"c05\_01"}\NormalTok{, }\StringTok{"c05\_02"}\NormalTok{, }\StringTok{"c05\_03"}\NormalTok{, }\StringTok{"c05\_04"}\NormalTok{, }\StringTok{"c05\_05"}\NormalTok{,}
+  \StringTok{"c06\_04"}\NormalTok{, }\StringTok{"c06\_05"}\NormalTok{,}
+  \StringTok{"c07\_01"}\NormalTok{, }\StringTok{"c07\_03"}\NormalTok{, }\StringTok{"c07\_04"}\NormalTok{, }\StringTok{"c07\_05"}\NormalTok{, }\StringTok{"c07\_06"}\NormalTok{,}
+  \StringTok{"c14\_01"}\NormalTok{, }\StringTok{"c14\_02"}\NormalTok{, }\StringTok{"c14\_03"}\NormalTok{, }\StringTok{"c14\_04"}
+\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(escala\_1a5\_cap3), rec\_escala, }\AttributeTok{.names =} \StringTok{"\{.col\}\_num"}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{c05\_01\_power           =}\NormalTok{ c05\_01\_num,}
+    \AttributeTok{c05\_02\_inequality      =}\NormalTok{ c05\_02\_num,}
+    \AttributeTok{c05\_03\_living\_standard =}\NormalTok{ c05\_03\_num,}
+    \AttributeTok{c05\_04\_better\_off      =}\NormalTok{ c05\_04\_num,}
+    \AttributeTok{c05\_05\_precariousness  =}\NormalTok{ c05\_05\_num,}
+    \AttributeTok{c06\_04\_low\_wages       =}\NormalTok{ c06\_04\_num,}
+    \AttributeTok{c06\_05\_informality     =}\NormalTok{ c06\_05\_num,}
+    \AttributeTok{c07\_01\_taxes           =}\NormalTok{ c07\_01\_num,}
+    \AttributeTok{c07\_03\_prounion\_laws   =}\NormalTok{ c07\_03\_num,}
+    \AttributeTok{c07\_04\_redistribution  =}\NormalTok{ c07\_04\_num,}
+    \AttributeTok{c07\_05\_gender\_eq       =}\NormalTok{ c07\_05\_num,}
+    \AttributeTok{c07\_06\_education       =}\NormalTok{ c07\_06\_num,}
+    \AttributeTok{c14\_01\_opportunities   =}\NormalTok{ c14\_01\_num,}
+    \AttributeTok{c14\_02\_injustices      =}\NormalTok{ c14\_02\_num,}
+    \AttributeTok{c14\_03\_rich            =}\NormalTok{ c14\_03\_num,}
+    \AttributeTok{c14\_04\_workers         =}\NormalTok{ c14\_04\_num}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{c05\_01\_power           =} \StringTok{"Agreement: Large business owners have too much power (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c05\_02\_inequality      =} \StringTok{"Agreement: Inequality is because business owners pay workers too little (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c05\_03\_living\_standard =} \StringTok{"Agreement: Living standards of business owners result from paying workers too little (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c05\_04\_better\_off      =} \StringTok{"Agreement: Workers would live better if business owners had less power (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c05\_05\_precariousness  =} \StringTok{"Agreement: There are precarious and unstable jobs because this benefits business owners (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c06\_04\_low\_wages       =} \StringTok{"Agreement: Wages are low because companies are unwilling to pay workers well (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c06\_05\_informality     =} \StringTok{"Agreement: Labor informality exists because companies are unwilling to offer decent jobs (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c07\_01\_taxes           =} \StringTok{"Agreement: Increasing taxes on the wealthiest to finance social programs (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c07\_03\_prounion\_laws   =} \StringTok{"Agreement: Implementing laws to give unions greater bargaining power (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c07\_04\_redistribution  =} \StringTok{"Agreement: Redistributing wealth from those with more resources to those with fewer (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c07\_05\_gender\_eq       =} \StringTok{"Agreement: Promoting equality between men and women (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c07\_06\_education       =} \StringTok{"Agreement: Guaranteeing free public higher education (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c14\_01\_opportunities   =} \StringTok{"Agreement: Capitalism allows everyone to have opportunities to succeed (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c14\_02\_injustices      =} \StringTok{"Agreement: Capitalism produces social injustices (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c14\_03\_rich            =} \StringTok{"Agreement: Under capitalism, only the rich benefit (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c14\_04\_workers         =} \StringTok{"Agreement: Capitalism is harmful to workers (1{-}5)"}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c05\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of agreement with: Large business owners have too much power in Chile (x) <numeric> 
+# total N=3048 valid N=3048 mean=-34.36 sd=182.77
+
+Value |                      Label |    N | Raw % | Valid % | Cum. %
+--------------------------------------------------------------------
+ -999 |    No answer (do not read) |   21 |  0.69 |    0.69 |   0.69
+ -888 |   Don’t know (do not read) |  107 |  3.51 |    3.51 |   4.20
+    1 |          Strongly disagree |   89 |  2.92 |    2.92 |   7.12
+    2 |                   Disagree |  172 |  5.64 |    5.64 |  12.76
+    3 | Neither agree nor disagree |  586 | 19.23 |   19.23 |  31.99
+    4 |                      Agree | 1289 | 42.29 |   42.29 |  74.28
+    5 |             Strongly agree |  784 | 25.72 |   25.72 | 100.00
+ <NA> |                       <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c05\_01\_power)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Agreement: Large business owners have too much power (1-5) (x) <numeric> 
+# total N=3048 valid N=2920 mean=3.86 sd=0.98
+
+Value |                      Label |    N | Raw % | Valid % | Cum. %
+--------------------------------------------------------------------
+    1 |          Strongly disagree |   89 |  2.92 |    3.05 |   3.05
+    2 |                   Disagree |  172 |  5.64 |    5.89 |   8.94
+    3 | Neither agree nor disagree |  586 | 19.23 |   20.07 |  29.01
+    4 |                      Agree | 1289 | 42.29 |   44.14 |  73.15
+    5 |             Strongly agree |  784 | 25.72 |   26.85 | 100.00
+ <NA> |                       <NA> |  128 |  4.20 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{d01\_classid}\label{d01_classid}
+
+\begin{itemize}
+\tightlist
+\item
+  1 = working class --\textgreater{} \texttt{d01} = 1 (clase baja) +
+  \texttt{d01} = 2 (clase trabajadora)
+\item
+  0 = resto --\textgreater{} \texttt{d01} 3 = media baja, 4 = media, 5 =
+  media alta, 6 = alta. + NS/NR
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Social class identification (x) <numeric> 
+# total N=3048 valid N=3048 mean=-53.03 sd=219.20
+
+Value |                    Label |   N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------------
+ -999 |  No answer (do not read) |  32 |  1.05 |    1.05 |   1.05
+ -888 | Don’t know (do not read) | 156 |  5.12 |    5.12 |   6.17
+    1 |              Lower class | 299 |  9.81 |    9.81 |  15.98
+    2 |            Working class | 813 | 26.67 |   26.67 |  42.65
+    3 |       Lower-middle class | 459 | 15.06 |   15.06 |  57.71
+    4 |             Middle class | 953 | 31.27 |   31.27 |  88.98
+    5 |       Upper-middle class | 275 |  9.02 |    9.02 |  98.00
+    6 |              Upper class |  61 |  2.00 |    2.00 | 100.00
+ <NA> |                     <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{d01\_classid =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      d01 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{d01\_classid =} \StringTok{"Working{-}class identification (dummy)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{d01\_classid =} \FunctionTok{c}\NormalTok{(}\StringTok{"Working class"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d01\_classid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Working-class identification (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.36 sd=0.48
+
+Value |         Label |    N | Raw % | Valid % | Cum. %
+-------------------------------------------------------
+    0 |         Other | 1936 | 63.52 |   63.52 |  63.52
+    1 | Working class | 1112 | 36.48 |   36.48 | 100.00
+ <NA> |          <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{d02\_classid}\label{d02_classid}
+
+Escala 0--5: 0 = no working-class id (los 0 de \texttt{d01\_classid});
+1--5 = intensidad (de \texttt{d02\_01}) para quienes sí se identifican.
+\texttt{d02\_01}: 1--5, -777 = No aplica, -888/-999.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d02\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of agreement with: I identify with people from the selected social class (x) <numeric> 
+# total N=3048 valid N=2860 mean=-6.77 sd=94.43
+
+Value |                                           Label |    N | Raw %
+----------------------------------------------------------------------
+ -999 |                         No answer (do not read) |    4 |  0.13
+ -888 |                        Don’t know (do not read) |    9 |  0.30
+ -777 | Not applicable (does not identify with a class) |   24 |  0.79
+    1 |                               Strongly disagree |   29 |  0.95
+    2 |                                        Disagree |   84 |  2.76
+    3 |                      Neither agree nor disagree |  370 | 12.14
+    4 |                                           Agree | 1737 | 56.99
+    5 |                                  Strongly agree |  603 | 19.78
+ <NA> |                                            <NA> |  188 |  6.17
+
+Value | Valid % | Cum. %
+------------------------
+ -999 |    0.14 |   0.14
+ -888 |    0.31 |   0.45
+ -777 |    0.84 |   1.29
+    1 |    1.01 |   2.31
+    2 |    2.94 |   5.24
+    3 |   12.94 |  18.18
+    4 |   60.73 |  78.92
+    5 |   21.08 | 100.00
+ <NA> |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{d02\_classid =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      d01\_classid }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \DecValTok{0}\NormalTok{,}
+\NormalTok{      d01\_classid }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\textasciitilde{}} \FunctionTok{rec\_escala}\NormalTok{(d02\_01, }\AttributeTok{missing =} \FunctionTok{c}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{777}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{888}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{999}\NormalTok{))}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{d02\_classid =} \StringTok{"Working{-}class identification intensity (0{-}5)"}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d02\_classid)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Working-class identification intensity (0-5) (x) <numeric> 
+# total N=3048 valid N=3040 mean=1.47 sd=2.01
+
+Value |                      Label |    N | Raw % | Valid % | Cum. %
+--------------------------------------------------------------------
+    0 |                          0 | 1936 | 63.52 |   63.68 |  63.68
+    1 |          Strongly disagree |   21 |  0.69 |    0.69 |  64.37
+    2 |                   Disagree |   39 |  1.28 |    1.28 |  65.66
+    3 | Neither agree nor disagree |   92 |  3.02 |    3.03 |  68.68
+    4 |                      Agree |  666 | 21.85 |   21.91 |  90.59
+    5 |             Strongly agree |  286 |  9.38 |    9.41 | 100.00
+ <NA> |                       <NA> |    8 |  0.26 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{d03\_classid\_d y
+d03\_classid\_four}\label{d03_classid_d-y-d03_classid_four}
+
+\texttt{d03}: 1 = Clase empresarial, 2 = Emprendedores, 3 = Clase media,
+4 = Clase trabajadora, 5 = Clase obrera, 6 = El pueblo, 7 = Otra.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{d03\_classid\_d}: 1 = working class (4 + 5 + 6); 0 = resto
+  (incl.~NS/NR).
+\item
+  \texttt{d03\_classid\_four}: 1 = Working class (4), 2 = Blue-collar
+  (5), 3 = The people (6), 4 = Other (resto incl.~NS/NR).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d03)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Work-related social class identification (x) <numeric> 
+# total N=3048 valid N=3048 mean=-22.50 sd=154.76
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   28 |  0.92 |    0.92 |   0.92
+ -888 | Don’t know (do not read) |   59 |  1.94 |    1.94 |   2.85
+    1 |           Business class |   24 |  0.79 |    0.79 |   3.64
+    2 |            Entrepreneurs |  162 |  5.31 |    5.31 |   8.96
+    3 |             Middle class |  719 | 23.59 |   23.59 |  32.55
+    4 |            Working class | 1326 | 43.50 |   43.50 |  76.05
+    5 |      Labor/working class |  404 | 13.25 |   13.25 |  89.30
+    6 |               The people |  316 | 10.37 |   10.37 |  99.67
+    7 |        Other. Which one? |   10 |  0.33 |    0.33 | 100.00
+ <NA> |                     <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{d03\_classid\_four =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        d03 }\SpecialCharTok{==} \DecValTok{4} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        d03 }\SpecialCharTok{==} \DecValTok{5} \SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        d03 }\SpecialCharTok{==} \DecValTok{6} \SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{.default =} \DecValTok{4}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Working class"}\NormalTok{, }\StringTok{"Blue{-}collar working class"}\NormalTok{, }\StringTok{"The people"}\NormalTok{, }\StringTok{"Other"}\NormalTok{)}
+\NormalTok{    ),}
+    \AttributeTok{d03\_classid\_d =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      d03 }\SpecialCharTok{\%in\%} \FunctionTok{c}\NormalTok{(}\DecValTok{4}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{6}\NormalTok{) }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{d03\_classid\_four =} \StringTok{"Class identification, work{-}referent (4 categories)"}\NormalTok{,}
+    \AttributeTok{d03\_classid\_d    =} \StringTok{"Working{-}class identification, work{-}referent (dummy)"}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{d03\_classid\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Working class"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d03\_classid\_four)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Class identification, work-referent (4 categories) (x) <categorical> 
+# total N=3048 valid N=3048 mean=2.33 sd=1.32
+
+Value                     |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------------------
+Working class             | 1326 | 43.50 |   43.50 |  43.50
+Blue-collar working class |  404 | 13.25 |   13.25 |  56.76
+The people                |  316 | 10.37 |   10.37 |  67.13
+Other                     | 1002 | 32.87 |   32.87 | 100.00
+<NA>                      |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{d03\_classid\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Working-class identification, work-referent (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.67 sd=0.47
+
+Value |         Label |    N | Raw % | Valid % | Cum. %
+-------------------------------------------------------
+    0 |         Other | 1002 | 32.87 |   32.87 |  32.87
+    1 | Working class | 2046 | 67.13 |   67.13 | 100.00
+ <NA> |          <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{quote}
+Nota: el documento pide incluir en el dummy las respuestas ``otra''
+(código 7 + texto en \texttt{d03\_esp}) similares a clase trabajadora.
+Eso requiere revisar \texttt{d03\_esp} manualmente; el código base NO
+incluye el código 7. Reclasificar tras revisar el texto libre (p.~ej.
+\texttt{str\_detect(d03\_esp,\ ...)}).
+\end{quote}
+
+\section{Cap. 4 --- Striking Power: Unions and Workplace
+Mobilization}\label{cap.-4-striking-power-unions-and-workplace-mobilization}
+
+\subsection{Escalas 1--5 (b01, b04, b05, b06, b07, b08, b09,
+b32)}\label{escalas-15-b01-b04-b05-b06-b07-b08-b09-b32}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{escala\_1a5\_cap4 }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}
+  \StringTok{"b01\_01"}\NormalTok{, }\StringTok{"b01\_02"}\NormalTok{, }\StringTok{"b01\_03"}\NormalTok{, }\StringTok{"b01\_04"}\NormalTok{,}
+  \StringTok{"b04\_01"}\NormalTok{, }\StringTok{"b04\_02"}\NormalTok{, }\StringTok{"b04\_03"}\NormalTok{,}
+  \StringTok{"b05\_01"}\NormalTok{, }\StringTok{"b05\_02"}\NormalTok{, }\StringTok{"b05\_03"}\NormalTok{,}
+  \StringTok{"b06\_01"}\NormalTok{, }\StringTok{"b06\_02"}\NormalTok{, }\StringTok{"b06\_03"}\NormalTok{, }\StringTok{"b06\_04"}\NormalTok{, }\StringTok{"b06\_05"}\NormalTok{,}
+  \StringTok{"b07\_01"}\NormalTok{, }\StringTok{"b07\_02"}\NormalTok{, }\StringTok{"b07\_03"}\NormalTok{, }\StringTok{"b07\_04"}\NormalTok{,}
+  \StringTok{"b08"}\NormalTok{,}
+  \StringTok{"b09\_01"}\NormalTok{, }\StringTok{"b09\_02"}\NormalTok{, }\StringTok{"b09\_03"}\NormalTok{, }\StringTok{"b09\_04"}\NormalTok{,}
+  \StringTok{"b32\_01"}\NormalTok{, }\StringTok{"b32\_02"}
+\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(escala\_1a5\_cap4), rec\_escala)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{b01\_01\_wages       =}\NormalTok{ b01\_01,}
+    \AttributeTok{b01\_02\_profits     =}\NormalTok{ b01\_02,}
+    \AttributeTok{b01\_03\_loses       =}\NormalTok{ b01\_03,}
+    \AttributeTok{b01\_04\_advantage   =}\NormalTok{ b01\_04,}
+    \AttributeTok{b04\_01\_payment     =}\NormalTok{ b04\_01,}
+    \AttributeTok{b04\_02\_workload    =}\NormalTok{ b04\_02,}
+    \AttributeTok{b04\_03\_rewards     =}\NormalTok{ b04\_03,}
+    \AttributeTok{b05\_01\_tired       =}\NormalTok{ b05\_01,}
+    \AttributeTok{b05\_02\_deadlines   =}\NormalTok{ b05\_02,}
+    \AttributeTok{b05\_03\_hours       =}\NormalTok{ b05\_03,}
+    \AttributeTok{b06\_01\_methods     =}\NormalTok{ b06\_01,}
+    \AttributeTok{b06\_02\_policies    =}\NormalTok{ b06\_02,}
+    \AttributeTok{b06\_03\_schedule    =}\NormalTok{ b06\_03,}
+    \AttributeTok{b06\_04\_rest        =}\NormalTok{ b06\_04,}
+    \AttributeTok{b06\_05\_timeoff     =}\NormalTok{ b06\_05,}
+    \AttributeTok{b07\_01\_secure      =}\NormalTok{ b07\_01,}
+    \AttributeTok{b07\_02\_unempl      =}\NormalTok{ b07\_02,}
+    \AttributeTok{b07\_03\_housework   =}\NormalTok{ b07\_03,}
+    \AttributeTok{b07\_04\_familytime  =}\NormalTok{ b07\_04,}
+    \AttributeTok{b08\_familydemand   =}\NormalTok{ b08,}
+    \AttributeTok{b09\_01\_managers    =}\NormalTok{ b09\_01,}
+    \AttributeTok{b09\_02\_supervisors =}\NormalTok{ b09\_02,}
+    \AttributeTok{b09\_03\_team        =}\NormalTok{ b09\_03,}
+    \AttributeTok{b09\_04\_trust       =}\NormalTok{ b09\_04,}
+    \AttributeTok{b32\_01\_strk\_wage   =}\NormalTok{ b32\_01,}
+    \AttributeTok{b32\_02\_strk\_equal  =}\NormalTok{ b32\_02}
+\NormalTok{  )}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \CommentTok{\# b01 — Agreement: perceived class exploitation at the firm (1{-}5)}
+    \AttributeTok{b01\_01\_wages       =} \StringTok{"Agreement: Owners\textquotesingle{}/managers\textquotesingle{} pay is too high relative to workers\textquotesingle{} (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b01\_02\_profits     =} \StringTok{"Agreement: Only management/owners benefit from company profits (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b01\_03\_loses       =} \StringTok{"Agreement: Only workers lose economically when the company does badly (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b01\_04\_advantage   =} \StringTok{"Agreement: Management/owners take advantage of employees\textquotesingle{} work (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b04 — Agreement: perceived fairness of own job (1{-}5)}
+    \AttributeTok{b04\_01\_payment     =} \StringTok{"Agreement: The pay I receive is fair (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b04\_02\_workload    =} \StringTok{"Agreement: My workload is fair (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b04\_03\_rewards     =} \StringTok{"Agreement: Rewards reflect the effort I make at work (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b05 — Frequency: work intensity/effort (1{-}5)}
+    \AttributeTok{b05\_01\_tired       =} \StringTok{"Frequency: Arrives home exhausted after the workday (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b05\_02\_deadlines   =} \StringTok{"Frequency: Has to meet tight deadlines (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b05\_03\_hours       =} \StringTok{"Frequency: Works more than 8 hours a day to finish tasks (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b06 — Influence over own working conditions (1{-}5)}
+    \AttributeTok{b06\_01\_methods     =} \StringTok{"Influence: Methods/way of carrying out tasks (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b06\_02\_policies    =} \StringTok{"Influence: Company policies on working conditions (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b06\_03\_schedule    =} \StringTok{"Influence: Start and end time of the workday (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b06\_04\_rest        =} \StringTok{"Influence: Time at which a break can be taken (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b06\_05\_timeoff     =} \StringTok{"Influence: Taking a few hours off for personal/family matters (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b07 — Agreement: job security and work{-}life balance (1{-}5)}
+    \AttributeTok{b07\_01\_secure      =} \StringTok{"Agreement: My job is secure and stable (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b07\_02\_unempl      =} \StringTok{"Agreement: I could lose my job in the next 6 months (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b07\_03\_housework   =} \StringTok{"Agreement: After work I can rest without major household tasks (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b07\_04\_familytime  =} \StringTok{"Agreement: Work takes away time I\textquotesingle{}d like with partner/family/friends (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b08 — Frequency: family{-}work interference (1{-}5)}
+    \AttributeTok{b08\_familydemand   =} \StringTok{"Frequency: Family{-}life demands interfere with work (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b09 — Agreement: labor relations climate at the firm (1{-}5)}
+    \AttributeTok{b09\_01\_managers    =} \StringTok{"Agreement: The management{-}workers relationship is conflictual (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b09\_02\_supervisors =} \StringTok{"Agreement: The workers{-}direct supervisors relationship is conflictual (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b09\_03\_team        =} \StringTok{"Agreement: Management and workers are one team; if one wins, all win (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b09\_04\_trust       =} \StringTok{"Agreement: Workers distrust promises made by management (1{-}5)"}\NormalTok{,}
+
+    \CommentTok{\# b32 — Willingness to strike (1{-}5)}
+    \AttributeTok{b32\_01\_strk\_wage   =} \StringTok{"Willingness: Strike for better wages and working conditions (1{-}5)"}\NormalTok{,}
+    \AttributeTok{b32\_02\_strk\_equal  =} \StringTok{"Willingness: Strike to demand more equality in the country (1{-}5)"}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b01\_01\_wages)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Agreement: Owners'/managers' pay is too high relative to workers' (1-5) (x) <numeric> 
+# total N=3048 valid N=2367 mean=3.48 sd=1.03
+
+Value |                      Label |   N | Raw % | Valid % | Cum. %
+-------------------------------------------------------------------
+    1 |          Strongly disagree |  96 |  3.15 |    4.06 |   4.06
+    2 |                   Disagree | 322 | 10.56 |   13.60 |  17.66
+    3 | Neither agree nor disagree | 635 | 20.83 |   26.83 |  44.49
+    4 |                      Agree | 970 | 31.82 |   40.98 |  85.47
+    5 |             Strongly agree | 344 | 11.29 |   14.53 | 100.00
+ <NA> |                       <NA> | 681 | 22.34 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b18 --- satisfacción (escala
+1--10)}\label{b18-satisfacciuxf3n-escala-110}
+
+NS/NR → NA, y ``No aplica'' (código 11 en
+\texttt{b18\_04}/\texttt{b18\_05}) → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{b18\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"b18\_01"}\NormalTok{, }\StringTok{"b18\_02"}\NormalTok{, }\StringTok{"b18\_03"}\NormalTok{, }\StringTok{"b18\_04"}\NormalTok{, }\StringTok{"b18\_05"}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\FunctionTok{across}\NormalTok{(}
+    \FunctionTok{all\_of}\NormalTok{(b18\_items),}
+    \SpecialCharTok{\textasciitilde{}} \FunctionTok{rec\_escala}\NormalTok{(.x, }\AttributeTok{missing =} \FunctionTok{c}\NormalTok{(}\DecValTok{11}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{888}\NormalTok{, }\SpecialCharTok{{-}}\DecValTok{999}\NormalTok{))}
+\NormalTok{  )) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{b18\_01\_job       =}\NormalTok{ b18\_01,}
+    \AttributeTok{b18\_02\_freetime  =}\NormalTok{ b18\_02,}
+    \AttributeTok{b18\_03\_balance   =}\NormalTok{ b18\_03,}
+    \AttributeTok{b18\_04\_kids      =}\NormalTok{ b18\_04,}
+    \AttributeTok{b18\_05\_housework =}\NormalTok{ b18\_05}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b18\_01\_job)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of satisfaction with: Your job (x) <numeric> 
+# total N=3048 valid N=3045 mean=7.03 sd=2.15
+
+Value |                  Label |   N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------
+    1 | 1 Totally dissatisfied |  22 |  0.72 |    0.72 |   0.72
+    2 |                      2 |  73 |  2.40 |    2.40 |   3.12
+    3 |                      3 |  75 |  2.46 |    2.46 |   5.58
+    4 |                      4 | 183 |  6.00 |    6.01 |  11.59
+    5 |                      5 | 400 | 13.12 |   13.14 |  24.73
+    6 |                      6 | 466 | 15.29 |   15.30 |  40.03
+    7 |                      7 | 490 | 16.08 |   16.09 |  56.12
+    8 |                      8 | 505 | 16.57 |   16.58 |  72.71
+    9 |                      9 | 296 |  9.71 |    9.72 |  82.43
+   10 |   10 Totally satisfied | 535 | 17.55 |   17.57 | 100.00
+ <NA> |                   <NA> |   3 |  0.10 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b13\_conflict}\label{b13_conflict}
+
+Dummy: 1 = sí, 0 = no (incl.~NS/NR). \texttt{b13}: 1 = Sí, 2 = No.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b13)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+In the last 12 months, there was a labor conflict in the company (x) <numeric> 
+# total N=3048 valid N=2105 mean=-115.11 sd=306.85
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   70 |  2.30 |    3.33 |   3.33
+ -888 | Don’t know (do not read) |  198 |  6.50 |    9.41 |  12.73
+    1 |                      Yes |  220 |  7.22 |   10.45 |  23.18
+    2 |                       No | 1617 | 53.05 |   76.82 | 100.00
+ <NA> |                     <NA> |  943 | 30.94 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{b13\_conflict =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      b13 }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b13\_conflict =} \StringTok{"Conflict occurred (dummy)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{b13\_conflict =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b13\_conflict)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Conflict occurred (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.07 sd=0.26
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 2828 | 92.78 |   92.78 |  92.78
+    1 |   Yes |  220 |  7.22 |    7.22 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{b14\_causes}\label{b14_causes}
+
+Multirespuesta dicotomizada (\texttt{b14\_cat1}--\texttt{b14\_cat10}).
+Categórica:
+
+\begin{itemize}
+\tightlist
+\item
+  1 = Wage-related: opción 1 (causas salariales).
+\item
+  2 = Employer-management hostility: opciones 2 (trato de superiores) +
+  7 (no respetó acuerdos) + 8 (incumplimiento normativa).
+\item
+  3 = Collective bargaining problems: opción 3.
+\item
+  4 = Work organization, conditions \& others: resto.
+\end{itemize}
+
+Prioridad: wage \textgreater{} hostility \textgreater{} bargaining
+\textgreater{} otros.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b14\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Main demands of the conflict in the company - Wage-related issues (x) <integer> 
+# total N=3048 valid N=3048 mean=0.02 sd=0.15
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2973 | 97.54 |   97.54 |  97.54
+    1 |   75 |  2.46 |    2.46 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.wage      =}\NormalTok{ (b14\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.hostility =}\NormalTok{ (b14\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b14\_cat7 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b14\_cat8 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.bargain   =}\NormalTok{ (b14\_cat3 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \CommentTok{\# b14\_cat1{-}10 nunca tiene NA (a quienes no les aplica les queda 0 en toda}
+    \CommentTok{\# la batería, igual que a quienes sí les aplica pero no marcaron ninguna}
+    \CommentTok{\# causa), así que respondio\_multi() no puede distinguir ambos casos. La}
+    \CommentTok{\# elegibilidad real la da b13\_conflict; una vez filtrada, el resto queda}
+    \CommentTok{\# en la categoría residual.}
+    \AttributeTok{b14\_causes =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        b13\_conflict }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
+\NormalTok{        .wage      }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        .hostility }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        .bargain   }\SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{.default =} \DecValTok{4}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}
+        \StringTok{"Wage{-}related"}\NormalTok{,}
+        \StringTok{"Employer{-}management hostility"}\NormalTok{,}
+        \StringTok{"Collective bargaining problems"}\NormalTok{,}
+        \StringTok{"Work organization, conditions \& others"}
+\NormalTok{      )}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b14\_causes =} \StringTok{"Causes of conflict"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b14\_causes)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Causes of conflict (x) <categorical> 
+# total N=3048 valid N=220 mean=2.30 sd=1.20
+
+Value                                  |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------------
+Wage-related                           |   75 |  2.46 |   34.09 |  34.09
+Employer-management hostility          |   63 |  2.07 |   28.64 |  62.73
+Collective bargaining problems         |   23 |  0.75 |   10.45 |  73.18
+Work organization, conditions & others |   59 |  1.94 |   26.82 | 100.00
+<NA>                                   | 2828 | 92.78 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{quote}
+Nota: al ser multirespuesta, el \texttt{case\_when} impone prioridad
+wage \textgreater{} hostility \textgreater{} bargaining \textgreater{}
+otros cuando se marcaron opciones de varios grupos.
+\end{quote}
+
+\subsection{b15\_measures}\label{b15_measures}
+
+Multirespuesta dicotomizada (\texttt{b15\_cat1}--\texttt{b15\_cat7}).
+Categórica:
+
+\begin{itemize}
+\tightlist
+\item
+  1 = Strike: opciones 1 (huelga), 3 (reunión/asamblea), 4 (bloqueo), 5
+  (marcha/concentración), 6 (paralización).
+\item
+  2 = Legal mobilization: opción 2 (demanda a Inspección/Tribunales).
+\item
+  3 = Other: opción 7 y resto.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b15\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Measures adopted by workers in response to the conflict - Strike (x) <integer> 
+# total N=3048 valid N=3048 mean=0.01 sd=0.09
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 3023 | 99.18 |   99.18 |  99.18
+    1 |   25 |  0.82 |    0.82 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.strike =}\NormalTok{ (b15\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b15\_cat3 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b15\_cat4 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}
+\NormalTok{              (b15\_cat5 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{) }\SpecialCharTok{|}\NormalTok{ (b15\_cat6 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \AttributeTok{.legal  =}\NormalTok{ (b15\_cat2 }\SpecialCharTok{\%in\%} \DecValTok{1}\NormalTok{),}
+    \CommentTok{\# Mismo caso que en b14\_causes: b15\_cat1{-}7 nunca tiene NA, así que la}
+    \CommentTok{\# elegibilidad se controla con b13\_conflict en vez de respondio\_multi().}
+    \AttributeTok{b15\_measures =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        b13\_conflict }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
+\NormalTok{        .strike   }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        .legal    }\SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+        \AttributeTok{.default =} \DecValTok{3}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{3}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Strike"}\NormalTok{, }\StringTok{"Legal mobilization"}\NormalTok{, }\StringTok{"Other"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b15\_measures =} \StringTok{"Measures taken in conflict"}\NormalTok{)}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b15\_measures)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Measures taken in conflict (x) <categorical> 
+# total N=3048 valid N=220 mean=1.80 sd=0.93
+
+Value              |    N | Raw % | Valid % | Cum. %
+----------------------------------------------------
+Strike             |  121 |  3.97 |   55.00 |  55.00
+Legal mobilization |   21 |  0.69 |    9.55 |  64.55
+Other              |   78 |  2.56 |   35.45 | 100.00
+<NA>               | 2828 | 92.78 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{quote}
+Nota: prioridad strike \textgreater{} legal \textgreater{} other. Quien
+marcó solo ``demanda'' (\texttt{b15\_cat2}) cae en 2; quien marcó huelga
+y demanda cae en 1.
+\end{quote}
+
+\subsection{b16\_union\_organizer}\label{b16_union_organizer}
+
+Multirespuesta (\texttt{b16\_cat1}--\texttt{b16\_cat3}). Dummy: 1 =
+sindicato (\texttt{cat1}); 0 = resto (con conflicto pero otro
+organizador, incluidos quienes no marcaron ninguna opción). NA = no hubo
+conflicto (\texttt{b13\_conflict\ ==\ 0}). Chile: 1 = Sindicato, 2 =
+grupos no sindicales, 3 = otros grupos.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b16\_cat1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Who organized the measures in response to the conflict - Union (x) <integer> 
+# total N=3048 valid N=3048 mean=0.02 sd=0.15
+
+Value |    N | Raw % | Valid % | Cum. %
+---------------------------------------
+    0 | 2973 | 97.54 |   97.54 |  97.54
+    1 |   75 |  2.46 |    2.46 | 100.00
+ <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \CommentTok{\# Mismo caso que en b14\_causes/b15\_measures: b16\_cat1{-}3 nunca tiene NA,}
+    \CommentTok{\# así que la elegibilidad se controla con b13\_conflict.}
+    \AttributeTok{b16\_union\_organizer =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      b13\_conflict }\SpecialCharTok{==} \DecValTok{0} \SpecialCharTok{\textasciitilde{}} \ConstantTok{NA}\NormalTok{,}
+\NormalTok{      b16\_cat1 }\SpecialCharTok{\%in\%} \DecValTok{1}   \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\FunctionTok{starts\_with}\NormalTok{(}\StringTok{"."}\NormalTok{)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{b16\_union\_organizer =} \StringTok{"Conflict organized by union (dummy)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{b16\_union\_organizer =} \FunctionTok{c}\NormalTok{(}\StringTok{"Union"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{b16\_union\_organizer)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Conflict organized by union (dummy) (x) <numeric> 
+# total N=3048 valid N=220 mean=0.34 sd=0.48
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 | Other |  145 |  4.76 |   65.91 |  65.91
+    1 | Union |   75 |  2.46 |   34.09 | 100.00
+ <NA> |  <NA> | 2828 | 92.78 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c04\_03 --- participación en
+huelga}\label{c04_03-participaciuxf3n-en-huelga}
+
+\texttt{c04\_03}: 1 = Nunca, 2 = Una vez, 3 = Dos, 4 = Tres, 5 = Más de
+tres.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{c04\_03\_strk\_d}: 1 = una vez o más (2--5); 0 = nunca (1) +
+  NS/NR.
+\item
+  \texttt{c04\_03\_strk\_five}: escala 1--5 numérica, NS/NR → NA.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c04\_03)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Frequency of: Participating in strikes or work stoppages (x) <numeric> 
+# total N=3048 valid N=3048 mean=-17.87 sd=133.58
+
+Value |                    Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------------------
+ -999 |  No answer (do not read) |   27 |  0.89 |    0.89 |   0.89
+ -888 | Don’t know (do not read) |   36 |  1.18 |    1.18 |   2.07
+    1 |                    Never | 2208 | 72.44 |   72.44 |  74.51
+    2 |                     Once |  338 | 11.09 |   11.09 |  85.60
+    3 |                    Twice |  231 |  7.58 |    7.58 |  93.18
+    4 |              Three times |  129 |  4.23 |    4.23 |  97.41
+    5 |    More than three times |   79 |  2.59 |    2.59 | 100.00
+ <NA> |                     <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{c04\_03\_strk\_five =} \FunctionTok{rec\_escala}\NormalTok{(c04\_03),}
+    \AttributeTok{c04\_03\_strk\_d =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      c04\_03 }\SpecialCharTok{\%in\%} \DecValTok{2}\SpecialCharTok{:}\DecValTok{5} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{c04\_03\_strk\_five =} \StringTok{"Strike participation frequency (1{-}5)"}\NormalTok{,}
+    \AttributeTok{c04\_03\_strk\_d    =} \StringTok{"Strike participation (dummy)"}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{c04\_03\_strk\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c04\_03\_strk\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Strike participation (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.25 sd=0.44
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 2271 | 74.51 |   74.51 |  74.51
+    1 |   Yes |  777 | 25.49 |   25.49 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c04\_03\_strk\_five)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Strike participation frequency (1-5) (x) <numeric> 
+# total N=3048 valid N=2985 mean=1.50 sd=0.99
+
+Value |                 Label |    N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------
+    1 |                 Never | 2208 | 72.44 |   73.97 |  73.97
+    2 |                  Once |  338 | 11.09 |   11.32 |  85.29
+    3 |                 Twice |  231 |  7.58 |    7.74 |  93.03
+    4 |           Three times |  129 |  4.23 |    4.32 |  97.35
+    5 | More than three times |   79 |  2.59 |    2.65 | 100.00
+ <NA> |                  <NA> |   63 |  2.07 |    <NA> |   <NA>
+\end{verbatim}
+
+\section{Cap. 5 --- Beyond the Workplace: Unions and Workers' Political
+Mobilization}\label{cap.-5-beyond-the-workplace-unions-and-workers-political-mobilization}
+
+\subsection{c04 --- participación política (dummy +
+escala)}\label{c04-participaciuxf3n-poluxedtica-dummy-escala}
+
+\texttt{c04\_01} (firmar petición), \texttt{c04\_02} (manifestaciones),
+\texttt{c04\_04} (redes sociales). Escala 1 = Nunca \ldots{} 5 = Más de
+tres veces.
+
+\begin{itemize}
+\tightlist
+\item
+  dummy \texttt{\_d}: 1 = una vez o más (2--5); 0 = nunca (1) + NS/NR.
+\item
+  escala \texttt{\_five}: 1--5 numérica, NS/NR → NA.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c04\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"c04\_01"}\NormalTok{, }\StringTok{"c04\_02"}\NormalTok{, }\StringTok{"c04\_04"}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(c04\_items), rec\_escala, }\AttributeTok{.names =} \StringTok{"\{.col\}\_five"}\NormalTok{),}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(c04\_items),}
+           \SpecialCharTok{\textasciitilde{}} \FunctionTok{case\_when}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(.x) }\SpecialCharTok{\%in\%} \DecValTok{2}\SpecialCharTok{:}\DecValTok{5} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{.default =} \DecValTok{0}\NormalTok{),}
+           \AttributeTok{.names =} \StringTok{"\{.col\}\_d"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{c04\_01\_petition\_five =}\NormalTok{ c04\_01\_five,}
+    \AttributeTok{c04\_02\_march\_five    =}\NormalTok{ c04\_02\_five,}
+    \AttributeTok{c04\_04\_socnet\_five   =}\NormalTok{ c04\_04\_five,}
+    \AttributeTok{c04\_01\_petition\_d    =}\NormalTok{ c04\_01\_d,}
+    \AttributeTok{c04\_02\_march\_d       =}\NormalTok{ c04\_02\_d,}
+    \AttributeTok{c04\_04\_socnet\_d      =}\NormalTok{ c04\_04\_d}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}
+    \AttributeTok{c04\_01\_petition\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{c04\_02\_march\_d    =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{c04\_04\_socnet\_d   =} \FunctionTok{c}\NormalTok{(}\StringTok{"Yes"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"No"} \OtherTok{=} \DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c04\_01\_petition\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+x <numeric> 
+# total N=3048 valid N=3048 mean=0.31 sd=0.46
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 |    No | 2113 | 69.32 |   69.32 |  69.32
+    1 |   Yes |  935 | 30.68 |   30.68 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c04\_01\_petition\_five)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Frequency of: Signing a letter or petition supporting a cause (x) <numeric> 
+# total N=3048 valid N=2859 mean=1.74 sd=1.23
+
+Value |                 Label |    N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------
+    1 |                 Never | 1924 | 63.12 |   67.30 |  67.30
+    2 |                  Once |  317 | 10.40 |   11.09 |  78.38
+    3 |                 Twice |  239 |  7.84 |    8.36 |  86.74
+    4 |           Three times |  207 |  6.79 |    7.24 |  93.98
+    5 | More than three times |  172 |  5.64 |    6.02 | 100.00
+ <NA> |                  <NA> |  189 |  6.20 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c11 --- participación en organizaciones (dummy + escala
+1--3)}\label{c11-participaciuxf3n-en-organizaciones-dummy-escala-13}
+
+\texttt{c11\_01} (vecinal), \texttt{c11\_02} (partido), \texttt{c11\_03}
+(deportiva), \texttt{c11\_04} (iglesia). Escala: 1 = Activo, 2 =
+Inactivo, 3 = No es miembro.
+
+\begin{itemize}
+\tightlist
+\item
+  dummy \texttt{\_d}: 1 = solo activos (código 1); 0 = resto
+  (incl.~NS/NR).
+\item
+  escala \texttt{\_three}: 1--3 numérica, NS/NR → NA.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{c11\_items }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\StringTok{"c11\_01"}\NormalTok{, }\StringTok{"c11\_02"}\NormalTok{, }\StringTok{"c11\_03"}\NormalTok{, }\StringTok{"c11\_04"}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(c11\_items), rec\_escala, }\AttributeTok{.names =} \StringTok{"\{.col\}\_three"}\NormalTok{),}
+    \FunctionTok{across}\NormalTok{(}\FunctionTok{all\_of}\NormalTok{(c11\_items),}
+           \SpecialCharTok{\textasciitilde{}} \FunctionTok{case\_when}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{zap\_labels}\NormalTok{(.x)) }\SpecialCharTok{==} \DecValTok{1} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{, }\AttributeTok{.default =} \DecValTok{0}\NormalTok{),}
+           \AttributeTok{.names =} \StringTok{"\{.col\}\_d"}\NormalTok{)}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{rename}\NormalTok{(}
+    \AttributeTok{c11\_01\_neigb\_three  =}\NormalTok{ c11\_01\_three,}
+    \AttributeTok{c11\_02\_party\_three  =}\NormalTok{ c11\_02\_three,}
+    \AttributeTok{c11\_03\_sport\_three  =}\NormalTok{ c11\_03\_three,}
+    \AttributeTok{c11\_04\_church\_three =}\NormalTok{ c11\_04\_three,}
+    \AttributeTok{c11\_01\_neigb\_d  =}\NormalTok{ c11\_01\_d,}
+    \AttributeTok{c11\_02\_party\_d  =}\NormalTok{ c11\_02\_d,}
+    \AttributeTok{c11\_03\_sport\_d  =}\NormalTok{ c11\_03\_d,}
+    \AttributeTok{c11\_04\_church\_d =}\NormalTok{ c11\_04\_d}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}
+    \AttributeTok{c11\_01\_neigb\_d  =} \FunctionTok{c}\NormalTok{(}\StringTok{"Active"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{c11\_02\_party\_d  =} \FunctionTok{c}\NormalTok{(}\StringTok{"Active"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{c11\_03\_sport\_d  =} \FunctionTok{c}\NormalTok{(}\StringTok{"Active"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{),}
+    \AttributeTok{c11\_04\_church\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Active"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{)}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c11\_01\_neigb\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+x <numeric> 
+# total N=3048 valid N=3048 mean=0.00 sd=0.00
+
+Value |  Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------
+    0 |  Other | 3048 |   100 |     100 |    100
+    1 | Active |    0 |     0 |       0 |    100
+ <NA> |   <NA> |    0 |     0 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c11\_01\_neigb\_three)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Member of: Neighborhood or community organization (x) <numeric> 
+# total N=3048 valid N=2974 mean=2.45 sd=0.75
+
+Value |        Label |    N | Raw % | Valid % | Cum. %
+------------------------------------------------------
+    1 |       Active |  470 | 15.42 |   15.80 |  15.80
+    2 |     Inactive |  699 | 22.93 |   23.50 |  39.31
+    3 | Not a member | 1805 | 59.22 |   60.69 | 100.00
+ <NA> |         <NA> |   74 |  2.43 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{quote}
+Nota: la escala 1--3 conserva el orden original (1 = activo, 2 =
+inactivo, 3 = no miembro). Si se quiere mayor número = mayor
+participación, invertirla.
+\end{quote}
+
+\subsection{c08 --- identificación política (dummy + factor 4
+cat.)}\label{c08-identificaciuxf3n-poluxedtica-dummy-factor-4-cat.}
+
+\texttt{c08}: 0--10 (0 izquierda, 10 derecha), 11 = Independiente, 12 =
+Ninguno.
+
+\begin{itemize}
+\tightlist
+\item
+  \texttt{c08\_leftid\_d}: 1 = valores 0--3; 0 = resto (incl.~11, 12,
+  NS/NR).
+\item
+  \texttt{c08\_poltid\_four}: 1 = Left (0--3), 2 = Center (4--6), 3 =
+  Right (7--10), 4 = Not identified (11 + 12 + NS/NR).
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c08)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Left–Right ideological positioning (x) <numeric> 
+# total N=3048 valid N=3048 mean=-29.80 sd=184.16
+
+Value |                        Label |   N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------------
+ -999 |      No answer (do not read) |  65 |  2.13 |    2.13 |   2.13
+ -888 |     Don’t know (do not read) |  52 |  1.71 |    1.71 |   3.84
+    0 |                       0 Left | 110 |  3.61 |    3.61 |   7.45
+    1 |                            1 |  35 |  1.15 |    1.15 |   8.60
+    2 |                            2 |  83 |  2.72 |    2.72 |  11.32
+    3 |                            3 | 155 |  5.09 |    5.09 |  16.40
+    4 |                            4 | 212 |  6.96 |    6.96 |  23.36
+    5 |                     5 Center | 830 | 27.23 |   27.23 |  50.59
+    6 |                            6 | 216 |  7.09 |    7.09 |  57.68
+    7 |                            7 | 233 |  7.64 |    7.64 |  65.32
+    8 |                            8 | 130 |  4.27 |    4.27 |  69.59
+    9 |                            9 |  54 |  1.77 |    1.77 |  71.36
+   10 |                     10 Right | 114 |  3.74 |    3.74 |  75.10
+   11 | 11 Independent (do not read) |  90 |  2.95 |    2.95 |  78.05
+   12 |        12 None (do not read) | 669 | 21.95 |   21.95 | 100.00
+ <NA> |                         <NA> |   0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{.c08 =} \FunctionTok{as.numeric}\NormalTok{(c08),}
+    \AttributeTok{c08\_leftid\_d =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      .c08 }\SpecialCharTok{\%in\%} \DecValTok{0}\SpecialCharTok{:}\DecValTok{3} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    ),}
+    \AttributeTok{c08\_poltid\_four =} \FunctionTok{factor}\NormalTok{(}
+      \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{        .c08 }\SpecialCharTok{\%in\%} \DecValTok{0}\SpecialCharTok{:}\DecValTok{3}  \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+\NormalTok{        .c08 }\SpecialCharTok{\%in\%} \DecValTok{4}\SpecialCharTok{:}\DecValTok{6}  \SpecialCharTok{\textasciitilde{}} \DecValTok{2}\NormalTok{,}
+\NormalTok{        .c08 }\SpecialCharTok{\%in\%} \DecValTok{7}\SpecialCharTok{:}\DecValTok{10} \SpecialCharTok{\textasciitilde{}} \DecValTok{3}\NormalTok{,}
+        \AttributeTok{.default =} \DecValTok{4}
+\NormalTok{      ),}
+      \AttributeTok{levels =} \DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{,}
+      \AttributeTok{labels =} \FunctionTok{c}\NormalTok{(}\StringTok{"Left"}\NormalTok{, }\StringTok{"Center"}\NormalTok{, }\StringTok{"Right"}\NormalTok{, }\StringTok{"Not identified"}\NormalTok{)}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{.c08) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}
+    \AttributeTok{c08\_leftid\_d    =} \StringTok{"Left identification (dummy)"}\NormalTok{,}
+    \AttributeTok{c08\_poltid\_four =} \StringTok{"Political identification (4 categories)"}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{c08\_leftid\_d =} \FunctionTok{c}\NormalTok{(}\StringTok{"Left"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c08\_leftid\_d)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Left identification (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.13 sd=0.33
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 | Other | 2665 | 87.43 |   87.43 |  87.43
+    1 |  Left |  383 | 12.57 |   12.57 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c08\_poltid\_four)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Political identification (4 categories) (x) <categorical> 
+# total N=3048 valid N=3048 mean=2.62 sd=1.03
+
+Value          |    N | Raw % | Valid % | Cum. %
+------------------------------------------------
+Left           |  383 | 12.57 |   12.57 |  12.57
+Center         | 1258 | 41.27 |   41.27 |  53.84
+Right          |  531 | 17.42 |   17.42 |  71.26
+Not identified |  876 | 28.74 |   28.74 | 100.00
+<NA>           |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c09\_leftparty\_id}\label{c09_leftparty_id}
+
+Dummy de identificación con partido de izquierda (criterio paper ILR
+Review): 1 = PC (1), PH (2), FA (3), PS (13) + ``otros'' (17) que digan
+izquierda; 0 = resto.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c09)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Political party preference (x) <numeric> 
+# total N=3048 valid N=3048 mean=-42.99 sd=229.75
+
+Value |                                   Label |    N | Raw % | Valid % | Cum. %
+---------------------------------------------------------------------------------
+ -999 |                   No responde (no leer) |  110 |  3.61 |    3.61 |   3.61
+ -888 |                       No sabe (no leer) |   71 |  2.33 |    2.33 |   5.94
+    1 |                  Partido Comunista (PC) |  120 |  3.94 |    3.94 |   9.88
+    2 |                  Partido Humanista (PH) |   44 |  1.44 |    1.44 |  11.32
+    3 |                      Frente Amplio (FA) |   72 |  2.36 |    2.36 |  13.68
+    4 |                              Demócratas |   46 |  1.51 |    1.51 |  15.19
+    5 |            Evolución Política (Evopoli) |   25 |  0.82 |    0.82 |  16.01
+    6 |         Partido Por la Democracia (PPD) |   71 |  2.33 |    2.33 |  18.34
+    7 |    Federación Regionalista Verde Social |   44 |  1.44 |    1.44 |  19.78
+    8 |       Partido Demócrata Cristiano (PDC) |   99 |  3.25 |    3.25 |  23.03
+    9 |          Movimiento Amarillos por Chile |   40 |  1.31 |    1.31 |  24.34
+   10 |                Renovación Nacional (RN) |   90 |  2.95 |    2.95 |  27.30
+   11 |     Unión Demócrata Independiente (UDI) |   40 |  1.31 |    1.31 |  28.61
+   12 |                     Partido Republicano |  116 |  3.81 |    3.81 |  32.41
+   13 |                 Partido Socialista (PS) |   73 |  2.40 |    2.40 |  34.81
+   14 | Partido Radical Social Demócrata (PRSD) |   11 |  0.36 |    0.36 |  35.17
+   15 |               Partido de la Gente (PDG) |   26 |  0.85 |    0.85 |  36.02
+   16 |                Partido Social Cristiano |   17 |  0.56 |    0.56 |  36.58
+   17 |                            Otro. ¿Cuál? |    7 |  0.23 |    0.23 |  36.81
+   18 |                                 Ninguno | 1926 | 63.19 |   63.19 | 100.00
+ <NA> |                                    <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# PC=1, PH=2, FA=3, PS=13. ("Otro"=17 a revisar en c09\_esp.)}
+\NormalTok{left\_parties }\OtherTok{\textless{}{-}} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{3}\NormalTok{, }\DecValTok{13}\NormalTok{)}
+
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{c09\_leftparty\_id =} \FunctionTok{case\_when}\NormalTok{(}
+\NormalTok{      c09 }\SpecialCharTok{\%in\%}\NormalTok{ left\_parties }\SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{,}
+      \AttributeTok{.default =} \DecValTok{0}
+\NormalTok{    )}
+\NormalTok{  ) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_variable\_labels}\NormalTok{(}\AttributeTok{c09\_leftparty\_id =} \StringTok{"Left{-}party identification (dummy)"}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{set\_value\_labels}\NormalTok{(}\AttributeTok{c09\_leftparty\_id =} \FunctionTok{c}\NormalTok{(}\StringTok{"Left"} \OtherTok{=} \DecValTok{1}\NormalTok{, }\StringTok{"Other"} \OtherTok{=} \DecValTok{0}\NormalTok{))}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c09\_leftparty\_id)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Left-party identification (dummy) (x) <numeric> 
+# total N=3048 valid N=3048 mean=0.10 sd=0.30
+
+Value | Label |    N | Raw % | Valid % | Cum. %
+-----------------------------------------------
+    0 | Other | 2739 | 89.86 |   89.86 |  89.86
+    1 |  Left |  309 | 10.14 |   10.14 | 100.00
+ <NA> |  <NA> |    0 |  0.00 |    <NA> |   <NA>
+\end{verbatim}
+
+\begin{quote}
+Nota: la definición pide incluir ``otros que se digan de izquierda''
+(código 17), lo que requiere revisar el texto libre en
+\texttt{c09\_esp}. El código base NO los incluye; reclasificar
+manualmente tras revisar.
+\end{quote}
+
+\subsection{c10 --- escala 1--5}\label{c10-escala-15}
+
+\texttt{c10\_01}, \texttt{c10\_02}: escala 1--5 numérica, NS/NR → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{c10\_01\_five =} \FunctionTok{rec\_escala}\NormalTok{(c10\_01),}
+    \AttributeTok{c10\_02\_five =} \FunctionTok{rec\_escala}\NormalTok{(c10\_02)}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c10\_01\_five)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Frequency of: Talking about politics with friends (x) <numeric> 
+# total N=3048 valid N=2925 mean=2.25 sd=1.22
+
+Value |           Label |    N | Raw % | Valid % | Cum. %
+---------------------------------------------------------
+    1 |           Never | 1097 | 35.99 |   37.50 |  37.50
+    2 |    Almost never |  665 | 21.82 |   22.74 |  60.24
+    3 |       Sometimes |  668 | 21.92 |   22.84 |  83.08
+    4 |      Frequently |  336 | 11.02 |   11.49 |  94.56
+    5 | Very frequently |  159 |  5.22 |    5.44 | 100.00
+ <NA> |            <NA> |  123 |  4.04 |    <NA> |   <NA>
+\end{verbatim}
+
+\subsection{c12 --- escala 1--5}\label{c12-escala-15}
+
+\texttt{c12\_01}, \texttt{c12\_02}: escala 1--5 numérica, NS/NR → NA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{data }\OtherTok{\textless{}{-}}\NormalTok{ data }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}
+    \AttributeTok{c12\_01 =} \FunctionTok{rec\_escala}\NormalTok{(c12\_01),}
+    \AttributeTok{c12\_02 =} \FunctionTok{rec\_escala}\NormalTok{(c12\_02)}
+\NormalTok{  )}
+
+\FunctionTok{frq}\NormalTok{(data}\SpecialCharTok{$}\NormalTok{c12\_01)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+Level of agreement with: I would feel comfortable organizing meetings with neighbors (x) <numeric> 
+# total N=3048 valid N=2928 mean=2.88 sd=1.17
+
+Value |                      Label |   N | Raw % | Valid % | Cum. %
+-------------------------------------------------------------------
+    1 |          Strongly disagree | 446 | 14.63 |   15.23 |  15.23
+    2 |                   Disagree | 658 | 21.59 |   22.47 |  37.70
+    3 | Neither agree nor disagree | 805 | 26.41 |   27.49 |  65.20
+    4 |                      Agree | 825 | 27.07 |   28.18 |  93.37
+    5 |             Strongly agree | 194 |  6.36 |    6.63 | 100.00
+ <NA> |                       <NA> | 120 |  3.94 |    <NA> |   <NA>
+\end{verbatim}
+
+\section{Social class (esquemas)}\label{social-class-esquemas}
+
+Las versiones del esquema de clases (\texttt{owners}, \texttt{owners2},
+\texttt{skills}, \texttt{organization\_assets}, y las variables finales)
+se construyen en el procesamiento previo
+(\texttt{01-proce-data-conclat-cl.qmd}). No hay código nuevo aquí: dejar
+disponibles esas variables con etiquetas consistentes.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Verificar qué versiones del esquema existen y homogeneizar etiquetas.}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Guardar datos}\label{guardar-datos}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# saveRDS(data, file = "output/data/datos{-}recodificados{-}cl.rds")}
+\end{Highlighting}
+\end{Shaded}
+
+
+
+
+
+\end{document}
