@@ -166,7 +166,7 @@ data <- data %>%
 frq(data$b19_unionized_firm)
 ```
 
-### ax_contract
+### a18_contract
 
 ```{r}
 frq(data$a18_cl)
