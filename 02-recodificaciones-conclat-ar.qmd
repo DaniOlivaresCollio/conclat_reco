@@ -1,8 +1,8 @@
-# Recodificaciones Conclat Chile
+# Recodificaciones Conclat Argentina
 
-Capítulo de recodificaciones para la **base de datos de Chile**.
+Capítulo de recodificaciones para la **base de datos de Argentina**.
 
-> Datos actualizados al 22/07/2026.
+> Adaptado desde `01-recodificaciones-conclat-cl.qmd`. Las diferencias respecto a Chile se señalan con la nota **[DIFIERE DE CHILE]** en la sección correspondiente.
 
 ## Preparación
 
@@ -47,17 +47,13 @@ p_load(
   rlang,             # motor interno de tidyverse, para usar expresiones 
   tidyverse,
   statar             # conectar con el lenguaje stata
-
-  # # conexion web
-  # curl,              # conexiones http de bajo nivel: para solucionar el problema de la api del ine
-  # httr               # cliente http para API
   )
 ```
 
 ### Cargar datos
 
 ```{r datos, message=FALSE, warning=FALSE}
-data <- readRDS("input/data/data-conclat-cl-en-clases.rds")
+data <- readRDS("input/data/data-conclat-ar-en-clases.rds")
 ```
 
 ### Helpers
@@ -83,13 +79,13 @@ rec_escala <- function(x, missing = c(-888, -999)) {
 
 ### a07_empl_sit
 
-Factor ordenado. En Chile 9 categorías de respuesta en variable `a07`.
+**[DIFIERE DE CHILE]** En Argentina `a07` tiene 7 categorías (en Chile, 9).
 
--   1.  Salaried --\> `a07`: 3–9 = asalariados/otros
+-   1.  Salaried --\> `a07`: 3–7 = Empleado/obrero sector público, Empleado/obrero sector privado, Servicio doméstico, FF.AA. y de seguridad, Para negocio/empresa de un familiar
 
--   2.  Self-employed --\> `a07`: 2 = Cuenta propia
+-   2.  Self-employed --\> `a07`: 2 = Trabajador por cuenta propia
 
--   3.  Owners --\> `a07`: 1 = Patrón/empleador
+-   3.  Owners --\> `a07`: 1 = Patrón(a) o empleador(a)
 
 ```{r}
 frq(data$a07)
@@ -98,7 +94,7 @@ data <- data %>%
   mutate(
     a07_empl_sit = factor(
       case_when(
-        as.numeric(a07) %in% 3:9 ~ 1,   # Salaried
+        as.numeric(a07) %in% 3:7 ~ 1,   # Salaried
         as.numeric(a07) == 2     ~ 2,   # Self-employed
         as.numeric(a07) == 1     ~ 3,   # Owners
         .default = NA_real_
@@ -117,7 +113,7 @@ frq(data$a07_empl_sit)
 
 -   1.  Yes: afiliado a sindicato --\> asalariado `b21`: 1 = miembro activo, 2 = miembro inactivo
 
--   1.  Yes: afiliado a sindicato --\> independiente `b25`: 1 = sindicato/agrupamiento de independientes, 2 = colegio profesional
+-   1.  Yes: afiliado a sindicato --\> independiente `b25`: 1 = agrupamiento de trabajadores independientes, 2 = colegio profesional
 
 -   0.  No: resto --\> incluye a empresarios y NS/NR
 
@@ -155,7 +151,6 @@ frq(data$b19)
 data <- data %>%
   mutate(
     b19_unionized_firm = case_when(
-      a07 %in% c(1, 2) ~ NA,
       b19 == 1 ~ 1,
       .default = 0
     )
@@ -166,20 +161,9 @@ data <- data %>%
 frq(data$b19_unionized_firm)
 ```
 
-### ax_contract
-
-```{r}
-frq(data$a18_cl)
-frq(data$contrato)
-
-data$a18_contract <- data$contrato
-
-frq(data$a18_contract)
-```
-
 ## Cap. 2 — Class, informality, and support for unions
 
-### why_member
+### b23_why_member
 
 -   1.  Pure economic --\> asalariados `b23_cat1`: 1 = Yes ("más beneficios económicos")
 
@@ -204,7 +188,7 @@ data <- data %>%
     .econ = (b23_cat1 %in% 1) | (b27_cat1 %in% 1),
     .coll = (b23_cat2 %in% 1) | (b27_cat2 %in% 1),
     .resp_valida = !is.na(b23_cat1) | !is.na(b27_cat1),
-    why_member = factor(
+    b23_why_member = factor(
       case_when(
         unionized == 0 ~ NA,
         .econ & !.coll ~ 1,
@@ -223,9 +207,9 @@ data <- data %>%
     )
   ) %>%
   select(-starts_with(".")) %>%
-  set_variable_labels(why_member = "Reason for union membership")
+  set_variable_labels(b23_why_member = "Reason for union membership")
 
-frq(data$why_member)
+frq(data$b23_why_member)
 ```
 
 ### b24_why_not_member
@@ -402,10 +386,10 @@ frq(data$b29_would_join_d)
 
 ### c15 — confianza en instituciones
 
-Seis ítems: `c15_01` partidos, `c15_02` sindicatos, `c15_03` grandes empresas, `c15_04` centrales sindicales, `c15_05` gremios empresariales, `c15_06` poder judicial. Escala 1–5 (1 = Nada … 5 = Mucha).
+Seis ítems: `c15_01` partidos, `c15_02` sindicatos, `c15_03` grandes empresas, `c15_04` centrales sindicales, `c15_05` cámaras empresariales, `c15_06` poder judicial. Escala 1–5 (1 = Nada … 5 = Mucha).
 
 -   Versión numérica: escala 1–5, NS/NR → NA.
--   Versión dummy: 1 = "Algo" + "Bastante" (códigos 3 y 4); 0 = resto (incl. NS/NR).
+-   Versión dummy: 1 = "Algo" + "Bastante" + "Mucha" (códigos 3, 4 y 5); 0 = resto (incl. NS/NR).
 
 ```{r}
 frq(data$c15_01)
@@ -526,7 +510,9 @@ frq(data$c05_01_power)
 
 ### d01_classid
 
--   1 = working class --\> `d01` = 1 (clase baja) + `d01` = 2 (clase trabajadora)
+**[DIFIERE DE CHILE]** En Argentina la categoría 2 de `d01` es "Clase obrera" (en Chile, "Clase trabajadora"). El agrupamiento operativo es el mismo: working class = {1, 2}.
+
+-   1 = working class --\> `d01` = 1 (clase baja) + `d01` = 2 (clase obrera)
 -   0 = resto --\> `d01` 3 = media baja, 4 = media, 5 = media alta, 6 = alta. + NS/NR
 
 ```{r}
@@ -552,10 +538,6 @@ Escala 0–5: 0 = no working-class id (los 0 de `d01_classid`); 1–5 = intensid
 ```{r}
 frq(data$d02_01)
 
-data %>% 
-  filter(d01_classid == 1 & d02_01 %in% c(-777, -888, -999)) %>% 
-  select(id, d01, d01_classid, d02_01)
-
 data <- data %>%
   mutate(
     d02_classid = case_when(
@@ -568,7 +550,7 @@ data <- data %>%
   ) %>% 
   mutate(
     d02_classid = if_else(
-      is.na(d02_classid), 1, d02_classid
+      is.na(d02_classid), 0, d02_classid
     )
   )
 
@@ -750,7 +732,6 @@ data <- data %>%
 
 data <- data %>%
   set_variable_labels(
-    # b01 — Agreement: perceived class exploitation at the firm (1-5)
     b18_01_job       = "Level of satisfaction with: Your job (1-10)",
     b18_02_freetime  = "Level of satisfaction with: Amount of free time (1-10)",
     b18_03_balance   = "Level of satisfaction with: Ability to balance work and family life (1-10)",
@@ -786,25 +767,28 @@ frq(data$b13_conflict)
 
 ### b14_causes
 
-Categórica:
+**[DIFIERE DE CHILE]** En Argentina `b14` es de **respuesta única** (una sola columna `b14`, códigos 1–11), no multirespuesta dicotomizada como en Chile. Además incluye una opción que no existe en Chile: 10 = Encuadramiento sindical (y por eso "Otros" pasa a ser el código 11).
 
--   1 = Wage-related: opción 1 (causas salariales).
--   2 = Employer-management hostility: opciones 2 (trato de superiores) + 7 (no respetó acuerdos) + 8 (incumplimiento normativa).
--   3 = Collective bargaining problems: opción 3.
--   4 = Work organization, conditions & others: resto.
+Códigos AR: 1 = Causas salariales, 2 = Trato de superiores, 3 = Negociación colectiva, 4 = Condiciones de seguridad, 5 = Despidos/reducciones, 6 = Organización del trabajo, 7 = No respetó acuerdos, 8 = Incumplimiento normativa, 9 = Reemplazo por tecnología, 10 = Encuadramiento sindical, 11 = Otros.
+
+-   1 = Wage-related: código 1 (causas salariales).
+-   2 = Employer-management hostility: códigos 2 (trato de superiores) + 7 (no respetó acuerdos) + 8 (incumplimiento normativa).
+-   3 = Collective bargaining problems: código 3.
+-   4 = Work organization, conditions & others: resto (4, 5, 6, 9, 10, 11), incluye encuadramiento sindical.
 
 ```{r}
 frq(data$b14)
 
 data <- data %>%
   mutate(
+    .b14 = as.numeric(b14),
     b14_causes = factor(
       case_when(
-        b13_conflict == 0   ~ NA,
-        b14 == 1            ~ 1,
-        b14 %in% c(2, 7, 8) ~ 2,
-        b14 == 3            ~ 3,
-        .default            = 4
+        b13_conflict == 0        ~ NA,
+        .b14 == 1                ~ 1,
+        .b14 %in% c(2, 7, 8)     ~ 2,
+        .b14 == 3                ~ 3,
+        .default = 4
       ),
       levels = 1:4,
       labels = c(
@@ -815,52 +799,63 @@ data <- data %>%
       )
     )
   ) %>%
+  select(-starts_with(".")) %>%
   set_variable_labels(b14_causes = "Causes of conflict")
 
 frq(data$b14_causes)
 ```
 
+> Nota: al ser respuesta única, cada caso cae en un solo grupo y no hay prioridad entre grupos (a diferencia de Chile, donde el `case_when` desempata combinaciones). Los NS/NR (-888/-999) de quienes sí tuvieron conflicto caen en la categoría 4 por el `.default`; si se prefiere dejarlos como NA, agregar una rama `.b14 %in% c(-888, -999) ~ NA`.
+
 ### b15_measures
 
-Categórica:
+Multirespuesta dicotomizada (`b15_cat1`–`b15_cat7`). Categórica:
 
 -   1 = Strike: opciones 1 (huelga), 3 (reunión/asamblea), 4 (bloqueo), 5 (marcha/concentración), 6 (paralización).
 -   2 = Legal mobilization: opción 2 (demanda a Inspección/Tribunales).
 -   3 = Other: opción 7 y resto.
 
 ```{r}
-frq(data$b15)
+frq(data$b15_cat1)
 
 data <- data %>%
   mutate(
+    .strike = (b15_cat1 %in% 1) | (b15_cat3 %in% 1) | (b15_cat4 %in% 1) |
+              (b15_cat5 %in% 1) | (b15_cat6 %in% 1),
+    .legal  = (b15_cat2 %in% 1),
     b15_measures = factor(
       case_when(
-        b13_conflict == 0           ~ NA,
-        b15 %in% c(1, 3, 4, 5, 6)   ~ 1,
-        b15 == 2                    ~ 2,
-        .default                    = 3
+        b13_conflict == 0 ~ NA,
+        .strike   ~ 1,
+        .legal    ~ 2,
+        .default = 3
       ),
       levels = 1:3,
       labels = c("Strike", "Legal mobilization", "Other")
     )
   ) %>%
+  select(-starts_with(".")) %>%
   set_variable_labels(b15_measures = "Measures taken in conflict")
 
 frq(data$b15_measures)
 ```
 
+> Nota: prioridad strike \> legal \> other. Quien marcó solo "demanda" (`b15_cat2`) cae en 2; quien marcó huelga y demanda cae en 1.
+
 ### b16_union_organizer
 
-Multirespuesta (`b16_cat1`–`b16_cat3`). Dummy: 1 = sindicato (`cat1`); 0 = resto (con conflicto pero otro organizador, incluidos quienes no marcaron ninguna opción). NA = no hubo conflicto (`b13_conflict == 0`). Chile: 1 = Sindicato, 2 = grupos no sindicales, 3 = otros grupos.
+**[DIFIERE DE CHILE]** Las categorías 2 y 3 de `b16` tienen contenido distinto en Argentina (2 = Delegados, 3 = Trabajadores autoconvocados; en Chile 2 = grupos no sindicales, 3 = otros grupos). Esto **no afecta el código**, porque el dummy solo usa `cat1` = Sindicato, idéntica en ambos países. Sí conviene tenerlo presente al interpretar la categoría 0.
+
+Multirespuesta (`b16_cat1`–`b16_cat3`). Dummy: 1 = sindicato (`cat1`); 0 = resto (con conflicto pero otro organizador, incluidos quienes no marcaron ninguna opción). NA = no hubo conflicto (`b13_conflict == 0`).
 
 ```{r}
-frq(data$b16_cl_cat1)
+frq(data$b16_cat1)
 
 data <- data %>%
   mutate(
     b16_union_organizer = case_when(
       b13_conflict == 0 ~ NA,
-      b16_cl_cat1 %in% 1   ~ 1,
+      b16_cat1 %in% 1   ~ 1,
       .default = 0
     )
   ) %>%
@@ -1019,13 +1014,16 @@ frq(data$c08_poltid_four)
 
 ### c09_leftparty_id
 
-Dummy de identificación con partido de izquierda (criterio paper ILR Review): 1 = PC (1), PH (2), FA (3), PS (13) + "otros" (17) que digan izquierda; 0 = resto.
+**[DIFIERE DE CHILE]** La lista de partidos de `c09` es completamente distinta. En Argentina: 1 = El peronismo/kirchnerismo, 2 = El PRO, 3 = Radicalismo, 4 = La Libertad Avanza, 5 = Peronismo no kirchnerista, 6 = Partidos de izquierda, 7 = Otro (especifique), 8 = Ninguno.
+
+Según el documento de recodificaciones, para Argentina la identificación de izquierda incluye peronismo/kirchnerismo (1) + partidos de izquierda (6), más los "otros" (7) que se declaren de izquierda.
 
 ```{r}
 frq(data$c09)
 
-# PC=1, PH=2, FA=3, PS=13. ("Otro"=17 a revisar en c09_esp.)
-left_parties <- c(1, 2, 3, 13)
+# Peronismo/kirchnerismo = 1; Partidos de izquierda = 6.
+# ("Otro" = 7 a revisar en c09_esp; peronismo no kirchnerista = 5 NO incluido.)
+left_parties <- c(1, 6)
 
 data <- data %>%
   mutate(
@@ -1039,6 +1037,8 @@ data <- data %>%
 
 frq(data$c09_leftparty_id)
 ```
+
+> Nota: incluir el peronismo/kirchnerismo como "izquierda" es una decisión sustantiva del proyecto (así lo indica el documento de recodificaciones), no una equivalencia automática con el criterio chileno. El código deja fuera al peronismo no kirchnerista (5). Los "otros" (7) que se declaren de izquierda requieren revisar el texto libre de `c09_esp` y reclasificar manualmente.
 
 ### c10 — escala 1–5
 
@@ -1061,15 +1061,15 @@ frq(data$c10_01_five)
 ```{r}
 data <- data %>%
   mutate(
-    c12_01_five = rec_escala(c12_01),
-    c12_02_five = rec_escala(c12_02)
+    c12_01 = rec_escala(c12_01),
+    c12_02 = rec_escala(c12_02)
   )
 
-frq(data$c12_01_five)
+frq(data$c12_01)
 ```
 
 ## Guardar datos
 
 ```{r}
-saveRDS(data, file = "output/data/datos-recodificados-cl.rds")
+saveRDS(data, file = "output/data/datos-recodificados-ar.rds")
 ```
